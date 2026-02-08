@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://sj1f7llishaf"]
 
+[ext_resource type="PackedScene" uid="uid://dlkugl6au71b5" path="res://Player/Character.tscn" id="1_11b8e"]
+
 [sub_resource type="PlaneMesh" id="PlaneMesh_m0t0v"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_iwo4u"]
@@ -15,3 +17,7 @@ mesh = SubResource("PlaneMesh_m0t0v")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1560639852]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000102996826, -0.05895996, -0.0036722422)
 shape = SubResource("BoxShape3D_iwo4u")
+
+[node name="Character" parent="." unique_id=1081461146 instance=ExtResource("1_11b8e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.030318975, 0.012164354, 0.0012600422)
+mouse_sensitivity = 0.25
