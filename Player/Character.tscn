@@ -13,7 +13,7 @@ height = 1.675293
 script = ExtResource("1_litpo")
 
 [node name="SophiaSkin" parent="." unique_id=361014828 instance=ExtResource("1_2m3pd")]
-script = null
+unique_name_in_owner = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=987686419]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8265579, 0)
