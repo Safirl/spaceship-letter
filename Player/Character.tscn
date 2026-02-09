@@ -28,5 +28,5 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0
 shape = SubResource("SphereShape3D_litpo")
 spring_length = 10.0
 
-[node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D" unique_id=1264777051]
+[node name="Camera" type="Camera3D" parent="CameraPivot/SpringArm3D" unique_id=1264777051]
 unique_name_in_owner = true

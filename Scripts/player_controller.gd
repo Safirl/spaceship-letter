@@ -8,7 +8,7 @@ extends CharacterBody3D
 @export var acceleration := 20.0
 
 @onready var _camera_pivot: Node3D = %CameraPivot
-@onready var _camera: Node3D = %Camera
+@onready var _camera: Camera3D = %Camera
 
 var _camera_input_direction := Vector2.ZERO
 
@@ -37,6 +37,13 @@ func _physics_process(delta: float) -> void:
 	
 	_camera_input_direction = Vector2.ZERO
 	
-	var raw_input := Input.get_vector("move_left", "move_right", "move_backward", "move_forward")
-	var forward = _camera.global_basis.z
-	var right = _camera.global_basis.x
+	var raw_input := Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
+	var forward := _camera.global_basis.z
+	var right := _camera.global_basis.x
+	
+	var move_direction := forward * raw_input.y + right * raw_input.x
+	move_direction.y = 0.
+	move_direction = move_direction.normalized()
+	
+	velocity = velocity.move_toward(move_direction * move_speed, acceleration * delta)
+	move_and_slide()
