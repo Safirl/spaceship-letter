@@ -66,10 +66,17 @@ func _create_input_events() -> void:
 	var move_backward_events: Array[InputEvent] = [move_backward_WASD, move_backward_arrow, move_backward_joystick]
 	var move_backward = TPSInput.new("move_backward", move_backward_events)
 	inputs.push_back(move_backward)
+	
+	var jump_keyboard = InputEventKey.new()
+	jump_keyboard.physical_keycode = KEY_SPACE
+	var jump_joystick = InputEventJoypadButton.new()
+	jump_joystick.button_index = JOY_BUTTON_A
+	var jump_events: Array[InputEvent] = [jump_keyboard, jump_joystick]
+	var jump = TPSInput.new("jump", jump_events)
+	inputs.push_back(jump)
 
 func _register_inputs() -> void:
 	for input in inputs:
-		print("input name:", input.action_name)
 		if not InputMap.has_action(input.action_name):
 			InputMap.add_action(input.action_name)
 
