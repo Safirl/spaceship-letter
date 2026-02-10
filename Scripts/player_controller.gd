@@ -11,7 +11,7 @@ extends CharacterBody3D
 
 @onready var _camera_pivot: Node3D = %CameraPivot
 @onready var _camera: Camera3D = %Camera
-@onready var _skin: SophiaSkin = %SophiaSkin
+@onready var _skin: SophiaSkin = %Pawn
 
 var _camera_input_direction := Vector2.ZERO
 #In Godot, Vector3.BACK is Forward vector in world space

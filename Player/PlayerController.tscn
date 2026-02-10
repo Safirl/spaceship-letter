@@ -9,10 +9,10 @@ height = 1.675293
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_litpo"]
 
-[node name="Character" type="CharacterBody3D" unique_id=1081461146]
+[node name="PlayerController" type="CharacterBody3D" unique_id=1081461146]
 script = ExtResource("1_litpo")
 
-[node name="SophiaSkin" parent="." unique_id=361014828 instance=ExtResource("1_2m3pd")]
+[node name="Pawn" parent="." unique_id=361014828 instance=ExtResource("1_2m3pd")]
 unique_name_in_owner = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=987686419]

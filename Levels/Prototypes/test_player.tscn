@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bqwtcbqg3ykid"]
 
 [ext_resource type="PackedScene" uid="uid://cnedxfn2pxh2t" path="res://Template/level/level.tscn" id="1_onsop"]
-[ext_resource type="PackedScene" uid="uid://dlkugl6au71b5" path="res://Player/Character.tscn" id="2_yr7h1"]
+[ext_resource type="PackedScene" uid="uid://dlkugl6au71b5" path="res://Player/PlayerController.tscn" id="2_yr7h1"]
 
 [node name="TestPlayer" type="Node3D" unique_id=1917375593]
 
