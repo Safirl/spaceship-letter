@@ -1,15 +1,98 @@
 [gd_scene format=3 uid="uid://sj1f7llishaf"]
 
 [ext_resource type="PackedScene" uid="uid://dlkugl6au71b5" path="res://addons/ThirdPersonController/player_controller.tscn" id="1_11b8e"]
+[ext_resource type="Shader" uid="uid://cdlt3ujrpad32" path="res://addons/ThirdPersonController/Example/level/sky_with_stars.tres" id="1_15vv2"]
+[ext_resource type="Texture2D" uid="uid://ca3jtautvrj1u" path="res://addons/ThirdPersonController/Example/level/moon.png" id="2_dko20"]
+[ext_resource type="PackedScene" uid="uid://prh35jb6tjtd" path="res://addons/ThirdPersonController/Example/player/sophia_skin/sophia_skin.tscn" id="2_jlcq4"]
+
+[sub_resource type="Curve" id="Curve_6w12d"]
+_data = [Vector2(0.331719, 0.0391753), 0.0, 0.0, 0, 0, Vector2(0.697336, 1), 0.51276, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_moxc7"]
+curve = SubResource("Curve_6w12d")
+
+[sub_resource type="Gradient" id="Gradient_td4d6"]
+offsets = PackedFloat32Array(0.784123, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_8kklh"]
+frequency = 0.3589
+fractal_octaves = 4
+cellular_distance_function = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_83fre"]
+width = 1024
+height = 1024
+generate_mipmaps = false
+noise = SubResource("FastNoiseLite_8kklh")
+color_ramp = SubResource("Gradient_td4d6")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bruj0"]
+shader = ExtResource("1_15vv2")
+shader_parameter/top_color = Color(0.288469, 0.182916, 1, 1)
+shader_parameter/bottom_color = Color(1, 0.46805, 0, 1)
+shader_parameter/gradient_curve = SubResource("CurveTexture_moxc7")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_83fre")
+shader_parameter/moon_texture = ExtResource("2_dko20")
+shader_parameter/moon_direction = Vector3(-1.095, 0.68, 1)
+shader_parameter/moon_size = 0.045
+
+[sub_resource type="Sky" id="Sky_0h0bb"]
+sky_material = SubResource("ShaderMaterial_bruj0")
+
+[sub_resource type="Environment" id="Environment_tg4yc"]
+background_mode = 2
+sky = SubResource("Sky_0h0bb")
+ambient_light_source = 3
+ambient_light_color = Color(0.74902, 0.742654, 0.615273, 1)
+ambient_light_sky_contribution = 0.0
+tonemap_mode = 2
+tonemap_exposure = 1.05
+tonemap_white = 0.95
+ssao_enabled = true
+ssao_radius = 2.0
+ssao_intensity = 1.4
+glow_intensity = 4.98
+glow_strength = 0.26
+glow_bloom = 0.08
+glow_blend_mode = 0
+glow_hdr_threshold = 0.26
+glow_hdr_scale = 0.0
+glow_hdr_luminance_cap = 18.75
+glow_map_strength = 1.0
+fog_light_color = Color(0.843137, 0.737255, 0.329412, 1)
+fog_density = 0.0
+fog_aerial_perspective = 1.0
+fog_sky_affect = 0.0
+fog_height_density = 0.1
+volumetric_fog_density = 0.01
+volumetric_fog_albedo = Color(0.843137, 0.737255, 0.329412, 1)
+volumetric_fog_emission = Color(0.843137, 0.737255, 0.329412, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_m0t0v"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_iwo4u"]
 size = Vector3(2.0070877, 0.13500977, 1.9875793)
 
+[sub_resource type="SphereMesh" id="SphereMesh_15vv2"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_dko20"]
+
 [node name="S_GravityTest" type="Node3D" unique_id=1078212070]
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1506181434]
+environment = SubResource("Environment_tg4yc")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=478653694]
+transform = Transform3D(-0.3270158, 0.94173074, -0.07876475, 0.68876356, 0.29457843, 0.66244125, 0.64704365, 0.16237843, -0.7449617, -47.2295, 26.8832, -28.0205)
+light_energy = 0.53
+shadow_enabled = true
+directional_shadow_max_distance = 40.0
+
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1731758818]
+visible = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=1162899310]
 mesh = SubResource("PlaneMesh_m0t0v")
@@ -18,6 +101,18 @@ mesh = SubResource("PlaneMesh_m0t0v")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000102996826, -0.05895996, -0.0036722422)
 shape = SubResource("BoxShape3D_iwo4u")
 
-[node name="Character" parent="." unique_id=1081461146 instance=ExtResource("1_11b8e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.030318975, 0.012164354, 0.0012600422)
-mouse_sensitivity = 0.25
+[node name="Character" parent="." unique_id=1081461146 node_paths=PackedStringArray("pawn") instance=ExtResource("1_11b8e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.030318975, 5.6233716, 0.0012600422)
+pawn = NodePath("SophiaSkin")
+
+[node name="SophiaSkin" parent="Character" unique_id=1815263186 instance=ExtResource("2_jlcq4")]
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="." unique_id=1795522678]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2" unique_id=1561430998]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+mesh = SubResource("SphereMesh_15vv2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2" unique_id=1908780998]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+shape = SubResource("SphereShape3D_dko20")

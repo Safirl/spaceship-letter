@@ -13,10 +13,6 @@ extends CharacterBody3D
 
 @onready var _camera_pivot: Node3D = %CameraPivot
 @onready var _camera: Camera3D = %Camera
-#@onready var pawn: Pawn = %Pawn
-
-#enum States {IDLE, JUMPING, FALLING, MOVING}
-#signal send_current_state
 
 var _camera_input_direction := Vector2.ZERO
 #In Godot, Vector3.BACK is Forward vector in world space

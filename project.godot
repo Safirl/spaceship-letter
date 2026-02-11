@@ -17,6 +17,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 TpsInputMap="*uid://da80on0hyncus"
+Events="*uid://cxi1smm7k6gys"
 
 [input]
 
