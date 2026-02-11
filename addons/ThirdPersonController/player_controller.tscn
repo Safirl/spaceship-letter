@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://dlkugl6au71b5"]
+
+[ext_resource type="Script" uid="uid://cfelv300g7cc1" path="res://addons/ThirdPersonController/Scripts/player_controller.gd" id="1_litpo"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x4rce"]
+radius = 0.2685547
+height = 1.675293
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_litpo"]
+
+[node name="PlayerController" type="CharacterBody3D" unique_id=1081461146]
+script = ExtResource("1_litpo")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=987686419]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8265579, 0)
+shape = SubResource("CapsuleShape3D_x4rce")
+
+[node name="CameraPivot" type="Node3D" parent="." unique_id=1900984662]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.8408974, -0.5411946, 0, 0.5411946, 0.8408974, 0, 0, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot" unique_id=1445858837]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+shape = SubResource("SphereShape3D_litpo")
+spring_length = 10.0
+
+[node name="Camera" type="Camera3D" parent="CameraPivot/SpringArm3D" unique_id=1264777051]
+unique_name_in_owner = true

@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://bqwtcbqg3ykid"]
+
+[ext_resource type="PackedScene" uid="uid://cnedxfn2pxh2t" path="res://addons/ThirdPersonController/Example/level/level.tscn" id="1_onsop"]
+[ext_resource type="PackedScene" uid="uid://dlkugl6au71b5" path="res://addons/ThirdPersonController/player_controller.tscn" id="2_yr7h1"]
+[ext_resource type="PackedScene" uid="uid://prh35jb6tjtd" path="res://addons/ThirdPersonController/Example/player/sophia_skin/sophia_skin.tscn" id="3_yr7h1"]
+
+[node name="TestPlayer" type="Node3D" unique_id=1917375593]
+
+[node name="Level" parent="." unique_id=947061492 instance=ExtResource("1_onsop")]
+
+[node name="PlayerController" parent="." unique_id=1081461146 node_paths=PackedStringArray("pawn") instance=ExtResource("2_yr7h1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5439754, 0, -39.975636)
+pawn = NodePath("SophiaSkin")
+
+[node name="SophiaSkin" parent="PlayerController" unique_id=1815263186 instance=ExtResource("3_yr7h1")]
