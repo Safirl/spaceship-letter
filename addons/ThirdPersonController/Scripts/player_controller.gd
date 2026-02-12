@@ -9,7 +9,7 @@ extends CharacterBody3D
 @export var acceleration := 20.0
 @export var rotation_speed := 12.0
 @export var jump_impulse := 12.0
-@export var gravity := -30.0
+@export var gravity := -30
 
 @onready var _camera_pivot: Node3D = %CameraPivot
 @onready var _camera: Camera3D = %Camera
