@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cnedxfn2pxh2t" path="res://addons/ThirdPersonController/Example/level/level.tscn" id="1_onsop"]
 [ext_resource type="PackedScene" uid="uid://dlkugl6au71b5" path="res://addons/ThirdPersonController/player_controller.tscn" id="2_yr7h1"]
 [ext_resource type="PackedScene" uid="uid://prh35jb6tjtd" path="res://addons/ThirdPersonController/Example/player/sophia_skin/sophia_skin.tscn" id="3_yr7h1"]
+[ext_resource type="Script" uid="uid://dqasjrgfxh28s" path="res://addons/ThirdPersonController/Scripts/constant_gravity_component.gd" id="4_54bwq"]
 
 [node name="TestPlayer" type="Node3D" unique_id=1917375593]
 
@@ -13,3 +14,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5439754, 0, -39.975636)
 pawn = NodePath("SophiaSkin")
 
 [node name="SophiaSkin" parent="PlayerController" unique_id=1815263186 instance=ExtResource("3_yr7h1")]
+
+[node name="Gravity" type="Node3D" parent="PlayerController" unique_id=1725593758]
+script = ExtResource("4_54bwq")

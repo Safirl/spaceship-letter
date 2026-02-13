@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dula5veh2tjog"]
+
+[ext_resource type="Script" uid="uid://m87mjtua3c1h" path="res://addons/ThirdPersonController/Scripts/base_gravity_component.gd" id="1_yohp3"]
+
+[node name="GravityComponent" type="Node3D" unique_id=40469910]
+script = ExtResource("1_yohp3")

@@ -4,7 +4,8 @@
 [ext_resource type="Shader" uid="uid://cdlt3ujrpad32" path="res://addons/ThirdPersonController/Example/level/sky_with_stars.tres" id="1_15vv2"]
 [ext_resource type="Texture2D" uid="uid://ca3jtautvrj1u" path="res://addons/ThirdPersonController/Example/level/moon.png" id="2_dko20"]
 [ext_resource type="PackedScene" uid="uid://prh35jb6tjtd" path="res://addons/ThirdPersonController/Example/player/sophia_skin/sophia_skin.tscn" id="2_jlcq4"]
-[ext_resource type="Script" uid="uid://bswfi8x6cfcm0" path="res://Planet/planet_behavior.gd" id="5_dko20"]
+[ext_resource type="Script" uid="uid://m87mjtua3c1h" path="res://addons/ThirdPersonController/Scripts/base_gravity_component.gd" id="4_6w12d"]
+[ext_resource type="PackedScene" uid="uid://c6hoosccl5md8" path="res://Planet/planet.tscn" id="5_dko20"]
 
 [sub_resource type="Curve" id="Curve_6w12d"]
 _data = [Vector2(0.331719, 0.0391753), 0.0, 0.0, 0, 0, Vector2(0.697336, 1), 0.51276, 0.0, 0, 0]
@@ -77,13 +78,6 @@ volumetric_fog_emission = Color(0.843137, 0.737255, 0.329412, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_iwo4u"]
 size = Vector3(2.0070877, 0.13500977, 1.9875793)
 
-[sub_resource type="SphereMesh" id="SphereMesh_15vv2"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_dko20"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_6w12d"]
-radius = 9.0
-
 [node name="S_GravityTest" type="Node3D" unique_id=1078212070]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1506181434]
@@ -108,27 +102,18 @@ shape = SubResource("BoxShape3D_iwo4u")
 [node name="Character" parent="." unique_id=1081461146 node_paths=PackedStringArray("pawn") instance=ExtResource("1_11b8e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9, 0)
 pawn = NodePath("SophiaSkin")
+gravity = 0.0
+
+[node name="Node3D" type="Node3D" parent="Character" unique_id=1440986556]
+script = ExtResource("4_6w12d")
 
 [node name="SophiaSkin" parent="Character" unique_id=1815263186 instance=ExtResource("2_jlcq4")]
 
-[node name="Planet" type="Node3D" parent="." unique_id=1896735864]
-script = ExtResource("5_dko20")
+[node name="Planet" parent="." unique_id=2053236219 instance=ExtResource("5_dko20")]
+spin_area = null
+planet_gravity = null
 
-[node name="PlanetStaticBody" type="StaticBody3D" parent="Planet" unique_id=1795522678]
-unique_name_in_owner = true
+[node name="PlanetStaticBody" parent="Planet" index="0" unique_id=855421187]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
 
-[node name="PlanetMesh" type="MeshInstance3D" parent="Planet/PlanetStaticBody" unique_id=1561430998]
-unique_name_in_owner = true
-mesh = SubResource("SphereMesh_15vv2")
-
-[node name="SurfaceCollisionShape" type="CollisionShape3D" parent="Planet/PlanetStaticBody" unique_id=1908780998]
-shape = SubResource("SphereShape3D_dko20")
-debug_color = Color(0, 0.3647059, 0.9254902, 1)
-
-[node name="MaxGravityArea" type="Area3D" parent="Planet" unique_id=1075595363]
-unique_name_in_owner = true
-
-[node name="MaxGravityShape" type="CollisionShape3D" parent="Planet/MaxGravityArea" unique_id=1239980099]
-unique_name_in_owner = true
-shape = SubResource("SphereShape3D_6w12d")
+[editable path="Planet"]

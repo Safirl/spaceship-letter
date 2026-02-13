@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://c6hoosccl5md8"]
+
+[ext_resource type="Script" uid="uid://bswfi8x6cfcm0" path="res://Planet/planet_behavior.gd" id="1_06kw6"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_15vv2"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_dko20"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_6w12d"]
+radius = 9.0
+
+[node name="Planet" type="Node3D" unique_id=2053236219]
+script = ExtResource("1_06kw6")
+
+[node name="PlanetStaticBody" type="StaticBody3D" parent="." unique_id=855421187]
+unique_name_in_owner = true
+
+[node name="PlanetMesh" type="MeshInstance3D" parent="PlanetStaticBody" unique_id=1122862199]
+unique_name_in_owner = true
+mesh = SubResource("SphereMesh_15vv2")
+
+[node name="SurfaceCollisionShape" type="CollisionShape3D" parent="PlanetStaticBody" unique_id=1385087150]
+shape = SubResource("SphereShape3D_dko20")
+debug_color = Color(0, 0.3647059, 0.9254902, 1)
+
+[node name="MaxGravityArea" type="Area3D" parent="." unique_id=822839728]
+unique_name_in_owner = true
+
+[node name="MaxGravityShape" type="CollisionShape3D" parent="MaxGravityArea" unique_id=38917084]
+unique_name_in_owner = true
+shape = SubResource("SphereShape3D_6w12d")

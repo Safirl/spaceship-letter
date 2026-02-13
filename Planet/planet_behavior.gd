@@ -1,7 +1,5 @@
 extends Node3D
 
-#@export var gravity_area_collision_shape := 10
-#@export var min_gravity_area := 2
 @export var spin_area := 5
 @export var planet_gravity := 30
 
@@ -10,38 +8,67 @@ extends Node3D
 @onready var planet_static_body: StaticBody3D = %PlanetStaticBody
 @onready var planet_mesh: MeshInstance3D = %PlanetMesh
 
+var _gravity_component: BaseGravityComponent
 var _is_user_in_radius := false
-var player_controller : CharacterBody3D = null
-## Idée:
-## La planète doit attirer le joueur vers son centre
-## Selon un max et un min
-## avec une zone pour tourner le joueur
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	gravity_area.body_entered.connect(func(body: Node3D):
-		if body is CharacterBody3D:
-			player_controller = body
-			_is_user_in_radius = true
+		if not is_instance_valid(body):
+			return
+		var children := body.get_children()
+		var index := body.get_children().find(BaseGravityComponent)
+		if index < 0:
+			return
+		_gravity_component = children.get(index)
+		if not is_instance_valid(_gravity_component):
+			return
+		_is_user_in_radius = true
 		)
-func _process(delta: float) -> void:
-	if _is_user_in_radius and is_instance_valid(player_controller):
-		get_gravity_on_object(player_controller.position)
+		
+	gravity_area.body_exited.connect(func(body: Node3D):
+		if body is PlayerController:
+			_gravity_component = null
+			_is_user_in_radius = false
+		)
+
+func _physics_process(delta: float) -> void:
+	if not _is_user_in_radius or not is_instance_valid(_gravity_component):
+		return
+	
+	var parent := _gravity_component.get_parent() as Node3D
+	if not is_instance_valid(parent):
+		return
+		
+	var gravity := get_gravity_on_object(parent.global_position)
+	var gravity_direction := get_gravity_direction(parent.global_position)
+	_gravity_component.add_force(gravity_direction, gravity)
 
 func get_gravity_on_object(object_position: Vector3) -> float:
 	var sphere_shape := gravity_area_collision_shape.shape as SphereShape3D
 	var distance := object_position.distance_to(position) - get_planet_radius()
-	## distance = 0 | max_distance x
-	## gravity = 30 | gravity y
 	if not is_instance_valid(sphere_shape):
 		push_error("Sphere shape is not valid")
 		return 0.
-	var object_gravity = planet_gravity - distance * planet_gravity / (sphere_shape.radius - get_planet_radius())
-	print(object_gravity)
-	return 0.
-	
+	var object_gravity = planet_gravity - distance * planet_gravity / (sphere_shape.radius * scale.x - get_planet_radius())
+	return object_gravity
+
+func get_spin_on_object(object: PlayerController) -> Vector3:
+	return Vector3.ZERO
+
+## object_position must be a global_position
+func get_gravity_direction(object_position: Vector3) -> Vector3:
+	return (global_position - object_position).normalized()
+
+func apply_gravity_to_body(body: PlayerController) -> void:
+	pass
 
 func get_planet_radius() -> float:
+	if not is_instance_valid(planet_mesh) or not is_instance_valid(planet_mesh.mesh):
+		push_error("planet mesh is not valid")
+		return 0.
+	if not is_instance_valid(planet_static_body):
+		push_error("planet static body is not valid")
+		return 0.
 	var planet_sphere_mesh := planet_mesh.mesh as SphereMesh
 	
 	var total_radius := planet_sphere_mesh.radius * planet_static_body.scale.x * scale.x

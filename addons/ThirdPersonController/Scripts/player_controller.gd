@@ -1,18 +1,25 @@
-extends CharacterBody3D
+class_name PlayerController extends CharacterBody3D
+
+##@todo: remove to use signals instead and decorrelate pawn from player controller.
+## The pawn that will receive the animations in response to the inputs.
 @export var pawn: Pawn
 
 @export_group("Camera")
-@export_range(0.0, 1.0) var mouse_sensitivity := .25
+@export_range(0.0, 1.0, .01) var mouse_sensitivity := .25
+#@export 
 
 @export_group("Movement")
-@export var move_speed := 8.0
-@export var acceleration := 20.0
-@export var rotation_speed := 12.0
-@export var jump_impulse := 12.0
-@export var gravity := -30
+@export_range(0., 20., .1) var move_speed := 8.0
+@export_range(0., 40., .1) var acceleration := 20.0
+@export_range(0., 20., .1) var rotation_speed := 12.0
+@export_range(0., 20., .1) var jump_impulse := 12.0
+@export_range(-30.0, 0., .1) var gravity := -30.0
 
 @onready var _camera_pivot: Node3D = %CameraPivot
 @onready var _camera: Camera3D = %Camera
+
+## inject BaseGravityComponents behaviors
+signal request_gravity(delta: float, previous_velocity: Vector3)
 
 var _camera_input_direction := Vector2.ZERO
 #In Godot, Vector3.BACK is Forward vector in world space
@@ -40,7 +47,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		var event_mouse_motion = event as InputEventMouseMotion
 		_camera_input_direction = event_mouse_motion.screen_relative * mouse_sensitivity
 
-func _physics_process(delta: float) -> void:	
+func _physics_process(delta: float) -> void:
 	_move_camera(delta)
 	var raw_input := Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	var forward := _camera.global_basis.z
@@ -49,10 +56,11 @@ func _physics_process(delta: float) -> void:
 	var move_direction := forward * raw_input.y + right * raw_input.x
 	move_direction.y = 0.
 	move_direction = move_direction.normalized()
-	var y_velocity := velocity.y
-	velocity.y = 0.0
+	var old_velocity := velocity
 	velocity = velocity.move_toward(move_direction * move_speed, acceleration * delta)
-	velocity.y = y_velocity + gravity * delta
+	
+	request_gravity.emit(delta, old_velocity)
+	#_parent.velocity.y = old_velocity.y + gravity * delta	
 	
 	var is_starting_jump := Input.is_action_just_pressed("jump") and is_on_floor()
 	if is_starting_jump:
