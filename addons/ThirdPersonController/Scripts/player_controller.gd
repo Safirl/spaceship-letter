@@ -1,12 +1,12 @@
 class_name PlayerController extends CharacterBody3D
 
-##@todo: remove to use signals instead and decorrelate pawn from player controller.
+## Base player controller to handle basic movements relatively to the camera orientation
+
 ## The pawn that will receive the animations in response to the inputs.
 @export var pawn: Pawn
 
 @export_group("Camera")
 @export_range(0.0, 1.0, .01) var mouse_sensitivity := .25
-#@export 
 
 @export_group("Movement")
 @export_range(0., 20., .1) var move_speed := 8.0
@@ -59,8 +59,8 @@ func _physics_process(delta: float) -> void:
 	var old_velocity := velocity
 	velocity = velocity.move_toward(move_direction * move_speed, acceleration * delta)
 	
-	request_gravity.emit(delta, old_velocity)
-	#_parent.velocity.y = old_velocity.y + gravity * delta	
+	#request_gravity.emit(delta, old_velocity)
+	velocity.y = old_velocity.y + gravity * delta	
 	
 	var is_starting_jump := Input.is_action_just_pressed("jump") and is_on_floor()
 	if is_starting_jump:
