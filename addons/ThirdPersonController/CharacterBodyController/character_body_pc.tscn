@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dlkugl6au71b5"]
 
-[ext_resource type="Script" uid="uid://cfelv300g7cc1" path="res://addons/ThirdPersonController/Scripts/player_controller.gd" id="1_litpo"]
+[ext_resource type="Script" uid="uid://cfelv300g7cc1" path="res://addons/ThirdPersonController/CharacterBodyController/character_pc.gd" id="1_litpo"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x4rce"]
 radius = 0.2685547

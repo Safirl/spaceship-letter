@@ -7,13 +7,15 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_dko20"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_6w12d"]
-radius = 9.0
+resource_local_to_scene = true
+radius = 22.924623
 
 [node name="Planet" type="Node3D" unique_id=2053236219]
 script = ExtResource("1_06kw6")
 
 [node name="PlanetStaticBody" type="StaticBody3D" parent="." unique_id=855421187]
 unique_name_in_owner = true
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
 
 [node name="PlanetMesh" type="MeshInstance3D" parent="PlanetStaticBody" unique_id=1122862199]
 unique_name_in_owner = true
@@ -25,6 +27,10 @@ debug_color = Color(0, 0.3647059, 0.9254902, 1)
 
 [node name="MaxGravityArea" type="Area3D" parent="." unique_id=822839728]
 unique_name_in_owner = true
+gravity_space_override = 3
+gravity_point = true
+gravity_point_center = Vector3(0, 0, 0)
+gravity_direction = Vector3(0, 0, 0)
 
 [node name="MaxGravityShape" type="CollisionShape3D" parent="MaxGravityArea" unique_id=38917084]
 unique_name_in_owner = true

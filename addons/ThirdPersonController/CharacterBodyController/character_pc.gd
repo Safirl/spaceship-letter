@@ -1,6 +1,7 @@
-class_name PlayerController extends CharacterBody3D
+class_name CharacterPlayerController extends CharacterBody3D
 
-## Base player controller to handle basic movements relatively to the camera orientation
+## player controller to handle basic movements relatively to the camera orientation.
+## The gravity is handle manually
 
 ## The pawn that will receive the animations in response to the inputs.
 @export var pawn: Pawn
@@ -18,7 +19,9 @@ class_name PlayerController extends CharacterBody3D
 @onready var _camera_pivot: Node3D = %CameraPivot
 @onready var _camera: Camera3D = %Camera
 
-## inject BaseGravityComponents behaviors
+## TODO: Check if this is useful. Otherwise remove it.
+## Called before the gravity is applied to the velocity. Used to inject other forces.
+## Don't forget to reapply y velocity
 signal request_gravity(delta: float, previous_velocity: Vector3)
 
 var _camera_input_direction := Vector2.ZERO
@@ -59,7 +62,8 @@ func _physics_process(delta: float) -> void:
 	var old_velocity := velocity
 	velocity = velocity.move_toward(move_direction * move_speed, acceleration * delta)
 	
-	#request_gravity.emit(delta, old_velocity)
+	request_gravity.emit(delta, old_velocity)
+
 	velocity.y = old_velocity.y + gravity * delta	
 	
 	var is_starting_jump := Input.is_action_just_pressed("jump") and is_on_floor()

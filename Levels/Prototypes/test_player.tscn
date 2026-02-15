@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://bqwtcbqg3ykid"]
 
 [ext_resource type="PackedScene" uid="uid://cnedxfn2pxh2t" path="res://addons/ThirdPersonController/Example/level/level.tscn" id="1_onsop"]
-[ext_resource type="PackedScene" uid="uid://dlkugl6au71b5" path="res://addons/ThirdPersonController/player_controller.tscn" id="2_yr7h1"]
+[ext_resource type="PackedScene" uid="uid://dlkugl6au71b5" path="res://addons/ThirdPersonController/CharacterBodyController/character_body_pc.tscn" id="2_yr7h1"]
 [ext_resource type="PackedScene" uid="uid://prh35jb6tjtd" path="res://addons/ThirdPersonController/Example/player/sophia_skin/sophia_skin.tscn" id="3_yr7h1"]
-[ext_resource type="Script" uid="uid://dqasjrgfxh28s" path="res://addons/ThirdPersonController/Scripts/constant_gravity_component.gd" id="4_54bwq"]
+[ext_resource type="PackedScene" uid="uid://cf71xlacpsrbw" path="res://addons/ThirdPersonController/RigidBodyPlayerController/rigid_body_pc.tscn" id="5_40btc"]
 
 [node name="TestPlayer" type="Node3D" unique_id=1917375593]
 
@@ -11,9 +11,13 @@
 
 [node name="PlayerController" parent="." unique_id=1081461146 node_paths=PackedStringArray("pawn") instance=ExtResource("2_yr7h1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5439754, 0, -39.975636)
+visible = false
 pawn = NodePath("SophiaSkin")
 
 [node name="SophiaSkin" parent="PlayerController" unique_id=1815263186 instance=ExtResource("3_yr7h1")]
 
-[node name="Gravity" type="Node3D" parent="PlayerController" unique_id=1725593758]
-script = ExtResource("4_54bwq")
+[node name="RigidBodyPc" parent="." unique_id=88483442 node_paths=PackedStringArray("pawn") instance=ExtResource("5_40btc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.61508083, 0, -39.975636)
+pawn = NodePath("SophiaSkin")
+
+[node name="SophiaSkin" parent="RigidBodyPc" unique_id=1494337430 instance=ExtResource("3_yr7h1")]

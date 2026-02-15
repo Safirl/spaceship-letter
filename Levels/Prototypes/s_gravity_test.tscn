@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://sj1f7llishaf"]
 
-[ext_resource type="PackedScene" uid="uid://dlkugl6au71b5" path="res://addons/ThirdPersonController/player_controller.tscn" id="1_11b8e"]
+[ext_resource type="PackedScene" uid="uid://dlkugl6au71b5" path="res://addons/ThirdPersonController/CharacterBodyController/character_body_pc.tscn" id="1_11b8e"]
 [ext_resource type="Shader" uid="uid://cdlt3ujrpad32" path="res://addons/ThirdPersonController/Example/level/sky_with_stars.tres" id="1_15vv2"]
 [ext_resource type="Texture2D" uid="uid://ca3jtautvrj1u" path="res://addons/ThirdPersonController/Example/level/moon.png" id="2_dko20"]
 [ext_resource type="PackedScene" uid="uid://prh35jb6tjtd" path="res://addons/ThirdPersonController/Example/player/sophia_skin/sophia_skin.tscn" id="2_jlcq4"]
@@ -78,6 +78,14 @@ volumetric_fog_emission = Color(0.843137, 0.737255, 0.329412, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_iwo4u"]
 size = Vector3(2.0070877, 0.13500977, 1.9875793)
 
+[sub_resource type="SphereMesh" id="SphereMesh_15vv2"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_dko20"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_6w12d"]
+resource_local_to_scene = true
+radius = 22.924623
+
 [node name="S_GravityTest" type="Node3D" unique_id=1078212070]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1506181434]
@@ -100,20 +108,26 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000102996826, -0.05895996,
 shape = SubResource("BoxShape3D_iwo4u")
 
 [node name="Character" parent="." unique_id=1081461146 node_paths=PackedStringArray("pawn") instance=ExtResource("1_11b8e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9, 0)
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0.07085419, 6.277918, 0)
 pawn = NodePath("SophiaSkin")
+jump_impulse = 20.0
 gravity = 0.0
 
-[node name="Node3D" type="Node3D" parent="Character" unique_id=1440986556]
+[node name="GravityComponent" type="Node3D" parent="Character" unique_id=1440986556]
 script = ExtResource("4_6w12d")
 
 [node name="SophiaSkin" parent="Character" unique_id=1815263186 instance=ExtResource("2_jlcq4")]
 
 [node name="Planet" parent="." unique_id=2053236219 instance=ExtResource("5_dko20")]
-spin_area = null
-planet_gravity = null
+planet_gravity = 63
 
-[node name="PlanetStaticBody" parent="Planet" index="0" unique_id=855421187]
-transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+[node name="PlanetMesh" parent="Planet/PlanetStaticBody" parent_id_path=PackedInt32Array(2053236219, 855421187) index="0" unique_id=1122862199]
+mesh = SubResource("SphereMesh_15vv2")
+
+[node name="SurfaceCollisionShape" parent="Planet/PlanetStaticBody" parent_id_path=PackedInt32Array(2053236219, 855421187) index="1" unique_id=1385087150]
+shape = SubResource("SphereShape3D_dko20")
+
+[node name="MaxGravityShape" parent="Planet/MaxGravityArea" parent_id_path=PackedInt32Array(2053236219, 822839728) index="0" unique_id=38917084]
+shape = SubResource("SphereShape3D_6w12d")
 
 [editable path="Planet"]

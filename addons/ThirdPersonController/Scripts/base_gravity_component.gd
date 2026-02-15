@@ -1,7 +1,5 @@
 class_name BaseGravityComponent extends Node3D
 
-@export_range(-30.0, 0., .1) var gravity := -30.0
-
 class Force:
 	var direction: Vector3
 	var strength: float
@@ -11,15 +9,15 @@ class Force:
 		strength = new_strength
 
 var forces: Array[Force] = []
-var _parent: PlayerController
+var _parent: CharacterPlayerController
 
 func _ready() -> void:
 	_parent = get_parent();
 	if not is_instance_valid(_parent):
 		push_error("parent object is not valid! This script must be used on a child component")
 		return
-	if not _parent is PlayerController:
-		push_error("parent object is not a PlayerController! This script must be used as a PlayerController child")
+	if not _parent is CharacterPlayerController:
+		push_error("parent object is not a CharacterPlayerController! This script must be used as a CharacterPlayerController child")
 		_parent = null
 	_parent.request_gravity.connect(apply_gravity)
 
@@ -28,12 +26,13 @@ func apply_gravity(delta: float, old_velocity: Vector3) -> void:
 	if not is_instance_valid(_parent):
 		push_error("parent object is not valid!")
 		return
-		
+	
+	#_parent.velocity.y = old_velocity.y
 	for force in forces:
 		var normalized_direction := force.direction.normalized()
 		_parent.velocity += normalized_direction * force.strength * delta
 	forces.clear()
-	
+
 func add_force(direction: Vector3, strength: float) -> void:
 	if not is_instance_valid(_parent):
 		push_error("parent object is not valid!")
