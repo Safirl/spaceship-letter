@@ -9,6 +9,9 @@ height = 1.675293
 [sub_resource type="SphereShape3D" id="SphereShape3D_2j7bj"]
 
 [node name="RigidBodyPc" type="RigidBody3D" unique_id=88483442]
+lock_rotation = true
+contact_monitor = true
+max_contacts_reported = 1
 script = ExtResource("1_nnojr")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1892222378]

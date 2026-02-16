@@ -20,7 +20,8 @@ class_name RigidBodyPlayerController extends RigidBody3D
 @onready var _camera: Camera3D = %Camera
 
 var _camera_input_direction := Vector2.ZERO
-var _last_movement_direction := Vector3.BACK
+var _move_direction := Vector3.BACK
+var _last_strong_direction := Vector3.ZERO
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -46,6 +47,55 @@ func _unhandled_input(event: InputEvent) -> void:
 		var event_mouse_motion = event as InputEventMouseMotion
 		_camera_input_direction = event_mouse_motion.screen_relative * mouse_sensitivity
 
+func _get_model_oriented_input() -> Vector3:
+	var raw_input := Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
+	var input := Vector3.ZERO
+	input.x = raw_input.x * sqrt(1. - raw_input.y * raw_input.y / 2)
+	input.z = raw_input.y * sqrt(1. - raw_input.x * raw_input.x / 2)
+
+	input = pawn.transform.basis * input
+	return input
+
+
+func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
+	var local_gravity := state.total_gravity.normalized()
+
+	if _move_direction.length() > .2:
+		_last_strong_direction = _move_direction.normalized()
+
+	_move_direction = get_model_oriented_input()
+	_orient_character_to_direction(_last_strong_direction, state.step)
+
+	if is_jumping(state):
+		apply_central_impulse(-local_gravity * jump_impulse)
+	if is_on_floor(state) and not 
+
+func _physics_process(delta: float) -> void:
+	_move_camera(delta)
+	var raw_input := Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
+	var forward := _camera.global_basis.z
+	var right := _camera.global_basis.x
+	
+	var move_direction := forward * raw_input.y + right * raw_input.x
+	move_direction.y = 0.
+	move_direction = move_direction.normalized()
+	var old_velocity := linear_velocity
+	velocity = velocity.move_toward(move_direction * move_speed, acceleration * delta)
+	
+	request_gravity.emit(delta, old_velocity)
+
+	velocity.y = old_velocity.y + gravity * delta	
+	
+	var is_starting_jump := Input.is_action_just_pressed("jump") and is_on_floor()
+	if is_starting_jump:
+		velocity.y += jump_impulse
+	
+	if move_direction.length() > .2:
+		_move_direction = move_direction
+	var target_angle := Vector3.BACK.signed_angle_to(_move_direction, Vector3.UP)
+	pawn.global_rotation.y = lerp_angle(pawn.rotation.y, target_angle, rotation_speed * delta)
+	_animate_character(is_starting_jump)
+
 func _animate_character(is_starting_jump: bool) -> void:
 	if is_starting_jump:
 		pawn.jump()
@@ -65,5 +115,9 @@ func _move_camera(delta: float) -> void:
 	
 	_camera_input_direction = Vector2.ZERO
 
-func is_on_floor() -> bool:
+func is_on_floor(state: PhysicsDirectBodyState3D) -> bool:
+	return true
+
+func is_jumping(state: PhysicsDirectBodyState3D) -> bool:
+	var is_starting_jump := Input.is_action_just_pressed("jump") and is_on_floor(state)
 	return true
