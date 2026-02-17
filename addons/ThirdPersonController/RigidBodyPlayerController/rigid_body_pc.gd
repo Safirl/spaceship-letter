@@ -22,6 +22,7 @@ class_name RigidBodyPlayerController extends RigidBody3D
 var _camera_input_direction := Vector2.ZERO
 var _move_direction := Vector3.BACK
 var _last_strong_direction := Vector3.ZERO
+var local_gravity := Vector3.ZERO
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -48,60 +49,48 @@ func _unhandled_input(event: InputEvent) -> void:
 		_camera_input_direction = event_mouse_motion.screen_relative * mouse_sensitivity
 
 func _get_model_oriented_input() -> Vector3:
-	var raw_input := Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
+	var input_left_right := (
+		Input.get_action_strength("move_left") - 
+		Input.get_action_strength("move_right")
+	)
+	var input_forward := Input.get_action_strength("move_forward")
+	var raw_input := Vector2(input_left_right, input_forward)
 	var input := Vector3.ZERO
 	input.x = raw_input.x * sqrt(1. - raw_input.y * raw_input.y / 2)
 	input.z = raw_input.y * sqrt(1. - raw_input.x * raw_input.x / 2)
 
-	input = pawn.transform.basis * input
+	input = pawn.basis * input
 	return input
 
+func _process(delta: float) -> void:
+	_move_camera(delta)
 
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
-	var local_gravity := state.total_gravity.normalized()
+	local_gravity = state.total_gravity.normalized()
 
 	if _move_direction.length() > .2:
 		_last_strong_direction = _move_direction.normalized()
 
-	_move_direction = get_model_oriented_input()
+	_move_direction = _get_model_oriented_input()
 	_orient_character_to_direction(_last_strong_direction, state.step)
 
 	if is_jumping(state):
 		apply_central_impulse(-local_gravity * jump_impulse)
-	if is_on_floor(state) and not 
+	if is_on_floor(state):
+		apply_central_force(_move_direction * move_speed)
+	_animate_character(state)
 
-func _physics_process(delta: float) -> void:
-	_move_camera(delta)
-	var raw_input := Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
-	var forward := _camera.global_basis.z
-	var right := _camera.global_basis.x
-	
-	var move_direction := forward * raw_input.y + right * raw_input.x
-	move_direction.y = 0.
-	move_direction = move_direction.normalized()
-	var old_velocity := linear_velocity
-	velocity = velocity.move_toward(move_direction * move_speed, acceleration * delta)
-	
-	request_gravity.emit(delta, old_velocity)
+func _orient_character_to_direction(direction: Vector3, delta: float) -> void:
+	var left_axis := (-local_gravity.cross(direction))
+	var rotation_basis := Basis(left_axis, -local_gravity, direction).orthonormalized()
+	pawn.basis = pawn.basis.get_rotation_quaternion().slerp(rotation_basis, delta * rotation_speed)
 
-	velocity.y = old_velocity.y + gravity * delta	
-	
-	var is_starting_jump := Input.is_action_just_pressed("jump") and is_on_floor()
-	if is_starting_jump:
-		velocity.y += jump_impulse
-	
-	if move_direction.length() > .2:
-		_move_direction = move_direction
-	var target_angle := Vector3.BACK.signed_angle_to(_move_direction, Vector3.UP)
-	pawn.global_rotation.y = lerp_angle(pawn.rotation.y, target_angle, rotation_speed * delta)
-	_animate_character(is_starting_jump)
-
-func _animate_character(is_starting_jump: bool) -> void:
-	if is_starting_jump:
+func _animate_character(state: PhysicsDirectBodyState3D) -> void:
+	if is_jumping(state):
 		pawn.jump()
-	elif not is_on_floor() and linear_velocity.y < 0.0:
+	elif not is_on_floor(state) and linear_velocity.y < 0.0:
 		pawn.fall()
-	elif is_on_floor():
+	elif is_on_floor(state):
 		var ground_speed := linear_velocity.length()
 		if ground_speed > 0.0:
 			pawn.move()
@@ -116,8 +105,11 @@ func _move_camera(delta: float) -> void:
 	_camera_input_direction = Vector2.ZERO
 
 func is_on_floor(state: PhysicsDirectBodyState3D) -> bool:
-	return true
+	for contact in state.get_contact_count():
+		var contact_normal = state.get_contact_local_normal(contact)
+		if contact_normal.dot(-local_gravity) > .5:
+			return true	
+	return false
 
 func is_jumping(state: PhysicsDirectBodyState3D) -> bool:
-	var is_starting_jump := Input.is_action_just_pressed("jump") and is_on_floor(state)
-	return true
+	return Input.is_action_just_pressed("jump") and is_on_floor(state)
