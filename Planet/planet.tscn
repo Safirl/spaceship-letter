@@ -10,7 +10,7 @@
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_6w12d"]
 resource_local_to_scene = true
-radius = 22.924623
+radius = 8.754189
 
 [node name="Planet" type="Node3D" unique_id=2053236219]
 script = ExtResource("1_06kw6")
@@ -40,12 +40,33 @@ shape = SubResource("SphereShape3D_6w12d")
 
 [node name="Camera" type="Camera3D" parent="." unique_id=452761381]
 unique_name_in_owner = true
-transform = Transform3D(-0.87206924, -0.14062922, 0.4687416, 0, 0.9578225, 0.28736055, -0.4893825, 0.25059828, -0.8352876, 6.9514637, 4.7884274, -11.38875)
+transform = Transform3D(0.049756292, -0.2870046, 0.9566362, 0, 0.9578225, 0.28736055, -0.9987614, -0.014297993, 0.0476577, 16.431885, 4.7884274, -6.9906044)
 
 [node name="RigidBodyPc" parent="." unique_id=88483442 node_paths=PackedStringArray("pawn") instance=ExtResource("2_0v15i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.0129337, 0)
 pawn = NodePath("SophiaSkin")
-move_speed = 4.0
-jump_impulse = 3.0
+jump_impulse = 12.0
 
 [node name="SophiaSkin" parent="RigidBodyPc" unique_id=1815263186 instance=ExtResource("3_b00i1")]
+
+[node name="PlanetStaticBody2" type="StaticBody3D" parent="." unique_id=901950853]
+unique_name_in_owner = true
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -0.02071762, 0, -17.270166)
+
+[node name="PlanetMesh" type="MeshInstance3D" parent="PlanetStaticBody2" unique_id=1902644214]
+mesh = SubResource("SphereMesh_15vv2")
+
+[node name="SurfaceCollisionShape" type="CollisionShape3D" parent="PlanetStaticBody2" unique_id=1950205387]
+shape = SubResource("SphereShape3D_dko20")
+debug_color = Color(0, 0.3647059, 0.9254902, 1)
+
+[node name="MaxGravityArea2" type="Area3D" parent="." unique_id=470263315]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.02071762, 0, -17.270166)
+gravity_space_override = 3
+gravity_point = true
+gravity_point_center = Vector3(0, 0, 0)
+gravity_direction = Vector3(0, 0, 0)
+
+[node name="MaxGravityShape" type="CollisionShape3D" parent="MaxGravityArea2" unique_id=1037130050]
+shape = SubResource("SphereShape3D_6w12d")

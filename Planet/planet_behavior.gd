@@ -46,11 +46,6 @@ func _physics_process(delta: float) -> void:
 	var gravity_direction := get_gravity_direction(parent.global_position)
 	print(gravity)
 	_gravity_component.add_force(gravity_direction, gravity)
-	#if 
-	#var target_quat := get_spin_on_object(parent)
-	#var current_quat := parent.global_basis.get_rotation_quaternion()
-	#parent.global_basis = Basis(target_quat)
-	#parent.look_at(global_position)
 
 func get_gravity_on_object(object_position: Vector3) -> float:
 	var sphere_shape := gravity_area_collision_shape.shape as SphereShape3D

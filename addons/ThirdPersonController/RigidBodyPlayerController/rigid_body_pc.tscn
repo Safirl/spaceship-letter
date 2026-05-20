@@ -21,12 +21,12 @@ shape = SubResource("CapsuleShape3D_2j7bj")
 
 [node name="CameraPivot" type="Node3D" parent="." unique_id=1665938510]
 unique_name_in_owner = true
-process_mode = 4
 transform = Transform3D(1, 0, 0, 0, 0.8408974, -0.5411946, 0, 0.5411946, 0.8408974, 0, 0, 0)
-visible = false
 
 [node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot" unique_id=706493962]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
-visible = false
 shape = SubResource("SphereShape3D_2j7bj")
 spring_length = 10.0
+
+[node name="Camera" type="Camera3D" parent="CameraPivot/SpringArm3D" unique_id=417886514]
+unique_name_in_owner = true

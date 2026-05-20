@@ -28,7 +28,6 @@ shape = SubResource("BoxShape3D_yr7h1")
 [node name="RigidBodyPc" parent="." unique_id=88483442 node_paths=PackedStringArray("pawn") instance=ExtResource("5_40btc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9562831, -40.738277)
 pawn = NodePath("SophiaSkin")
-jump_impulse = 7.0
 
 [node name="SophiaSkin" parent="RigidBodyPc" unique_id=1815263186 instance=ExtResource("3_yr7h1")]
 
@@ -41,10 +40,6 @@ gravity_direction = Vector3(0, 0, 1)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D2" unique_id=362979333]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1841431, 2.2806396, -5.7333984)
 shape = SubResource("BoxShape3D_54bwq")
-
-[node name="Camera" type="Camera3D" parent="." unique_id=703518261]
-unique_name_in_owner = true
-transform = Transform3D(-0.13990782, -0.34914526, 0.92656535, 0.046848774, 0.93238693, 0.35841292, -0.98905563, 0.093553215, -0.114091195, 13.438608, 4.7884274, -40.775726)
 
 [node name="Area3D3" type="Area3D" parent="." unique_id=2093259313]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.120242, -1.2527308, -31.597343)

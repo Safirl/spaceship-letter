@@ -11,10 +11,10 @@ class_name RigidBodyPlayerController extends RigidBody3D
 @export_range(0.0, 1.0, .01) var mouse_sensitivity := .25
 
 @export_group("Movement")
-@export_range(0., 20., .1) var move_speed := 8.0
+@export_range(0., 20., .1) var move_speed := 4.0
 @export_range(0., 40., .1) var acceleration := 20.0
 @export_range(0., 20., .1) var rotation_speed := 12.0
-@export_range(0., 20., .1) var jump_impulse := 12.0
+@export_range(0., 20., .1) var jump_impulse := 3.0
 @export_range(0., 100., .1) var damping := 60.0
 
 @onready var _camera_pivot: Node3D = %CameraPivot
@@ -41,22 +41,18 @@ func _input(event: InputEvent) -> void:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 ## TODO: This should be in a camera class
-#func _unhandled_input(event: InputEvent) -> void:
-	#var is_camera_motion := (
-		#event is InputEventMouseMotion and
-		#Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED
-	#)
-	#if is_camera_motion:
-		#var event_mouse_motion = event as InputEventMouseMotion
-		#_camera_input_direction = event_mouse_motion.screen_relative * mouse_sensitivity
+func _unhandled_input(event: InputEvent) -> void:
+	var is_camera_motion := (
+		event is InputEventMouseMotion and
+		Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED
+	)
+	if is_camera_motion:
+		var event_mouse_motion = event as InputEventMouseMotion
+		_camera_input_direction = event_mouse_motion.screen_relative * mouse_sensitivity
 
 
 func _process(delta: float) -> void:
-	pass
-	#_move_camera(delta)
-	#_move_direction = _get_model_oriented_input()
-	
-#func _physics_process(delta: float) -> void:
+	_move_camera(delta)
 
 
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
@@ -91,14 +87,6 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	_animate_character(state)
 
 func _get_model_oriented_input() -> Vector3:
-	#var input_left_right := (
-		#Input.get_action_strength("move_left") -
-		#Input.get_action_strength("move_right")
-	#)
-	#var input_forward := (
-		#Input.get_action_strength("move_forward") -
-		#Input.get_action_strength("move_backward")
-	#)
 	var raw_input := Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	var forward := -basis.z
 	var right := -basis.x
@@ -114,7 +102,7 @@ func _orient_body_to_gravity(delta: float) -> void:
 		return
 	var angle := current_up.angle_to(up)
 	var rotation_quat := Quaternion(rotation_axis.normalized(), angle)
-	basis = Basis(rotation_quat.slerp(Quaternion.IDENTITY, 1.0 - delta * 20) * basis.get_rotation_quaternion())
+	basis = Basis(rotation_quat.slerp(Quaternion.IDENTITY, 1.0 - delta * 5) * basis.get_rotation_quaternion())
 
 func _orient_character_to_direction(direction: Vector3, delta: float) -> void:
 	if direction.length() < 0.001:
