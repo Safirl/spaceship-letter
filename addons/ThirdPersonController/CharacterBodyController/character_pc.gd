@@ -56,15 +56,16 @@ func _physics_process(delta: float) -> void:
 	var forward := _camera.global_basis.z
 	var right := _camera.global_basis.x
 	
+	# prendre la direction par rapport à notre transform actuel
 	var move_direction := forward * raw_input.y + right * raw_input.x
 	move_direction.y = 0.
 	move_direction = move_direction.normalized()
 	var old_velocity := velocity
 	velocity = velocity.move_toward(move_direction * move_speed, acceleration * delta)
 	
-	request_gravity.emit(delta, old_velocity)
+	#request_gravity.emit(delta, old_velocity)
 
-	velocity.y = old_velocity.y + gravity * delta	
+	velocity.y = old_velocity.y + gravity * delta
 	
 	var is_starting_jump := Input.is_action_just_pressed("jump") and is_on_floor()
 	if is_starting_jump:

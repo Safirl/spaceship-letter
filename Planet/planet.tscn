@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://c6hoosccl5md8"]
 
 [ext_resource type="Script" uid="uid://bswfi8x6cfcm0" path="res://Planet/planet_behavior.gd" id="1_06kw6"]
+[ext_resource type="PackedScene" uid="uid://cf71xlacpsrbw" path="res://addons/ThirdPersonController/RigidBodyPlayerController/rigid_body_pc.tscn" id="2_0v15i"]
+[ext_resource type="PackedScene" uid="uid://prh35jb6tjtd" path="res://addons/ThirdPersonController/Example/player/sophia_skin/sophia_skin.tscn" id="3_b00i1"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_15vv2"]
 
@@ -35,3 +37,15 @@ gravity_direction = Vector3(0, 0, 0)
 [node name="MaxGravityShape" type="CollisionShape3D" parent="MaxGravityArea" unique_id=38917084]
 unique_name_in_owner = true
 shape = SubResource("SphereShape3D_6w12d")
+
+[node name="Camera" type="Camera3D" parent="." unique_id=452761381]
+unique_name_in_owner = true
+transform = Transform3D(-0.87206924, -0.14062922, 0.4687416, 0, 0.9578225, 0.28736055, -0.4893825, 0.25059828, -0.8352876, 6.9514637, 4.7884274, -11.38875)
+
+[node name="RigidBodyPc" parent="." unique_id=88483442 node_paths=PackedStringArray("pawn") instance=ExtResource("2_0v15i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.0129337, 0)
+pawn = NodePath("SophiaSkin")
+move_speed = 4.0
+jump_impulse = 3.0
+
+[node name="SophiaSkin" parent="RigidBodyPc" unique_id=1815263186 instance=ExtResource("3_b00i1")]
