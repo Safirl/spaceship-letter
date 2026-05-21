@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://bqwtcbqg3ykid"]
+
+[ext_resource type="PackedScene" uid="uid://cnedxfn2pxh2t" path="res://addons/ThirdPersonController/Example/level/level.tscn" id="1_h2l1i"]
+[ext_resource type="PackedScene" uid="uid://cf71xlacpsrbw" path="res://Player/rigid_body_pc.tscn" id="2_v8qjj"]
+[ext_resource type="PackedScene" uid="uid://prh35jb6tjtd" path="res://addons/ThirdPersonController/Example/player/sophia_skin/sophia_skin.tscn" id="3_vebd7"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yr7h1"]
+size = Vector3(10.086029, 14, 26.056412)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_54bwq"]
+size = Vector3(14.709106, 11.87207, 9.347168)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_40btc"]
+size = Vector3(12.198425, 6.7402344, 9.347168)
+
+[node name="TestPlayer" type="Node3D" unique_id=1917375593]
+
+[node name="Level" parent="." unique_id=947061492 instance=ExtResource("1_h2l1i")]
+
+[node name="RigidBodyPc" parent="." unique_id=88483442 node_paths=PackedStringArray("pawn") instance=ExtResource("2_v8qjj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -0.043716908, -39.738277)
+pawn = NodePath("SophiaSkin")
+jump_impulse = 8.0
+
+[node name="SophiaSkin" parent="RigidBodyPc" unique_id=1815263186 instance=ExtResource("3_vebd7")]
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1336147305]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5493207, -4.7683716e-07, -36.586487)
+gravity_space_override = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=184399596]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5426178, -0.036132813, 7.642311)
+shape = SubResource("BoxShape3D_yr7h1")
+
+[node name="Area3D2" type="Area3D" parent="." unique_id=2125895281]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0986414, -1.2527308, -40.942116)
+gravity_space_override = 3
+gravity_point_center = Vector3(0, 0, 1)
+gravity_direction = Vector3(0, 0, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D2" unique_id=362979333]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1841431, 2.2806396, -5.7333984)
+shape = SubResource("BoxShape3D_54bwq")
+
+[node name="Area3D3" type="Area3D" parent="." unique_id=2093259313]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.120242, -1.2527308, -31.597343)
+gravity_space_override = 3
+gravity_point_center = Vector3(-1, 0, 0)
+gravity_direction = Vector3(-1, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D3" unique_id=728935338]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.07119751, -0.28527832, -5.7333984)
+shape = SubResource("BoxShape3D_40btc")

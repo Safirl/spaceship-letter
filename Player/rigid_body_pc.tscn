@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://cf71xlacpsrbw"]
+
+[ext_resource type="Script" uid="uid://c7414julxk5xj" path="res://Player/rigid_body_pc.gd" id="1_nnojr"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2j7bj"]
+radius = 0.2685547
+height = 1.675293
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_2j7bj"]
+
+[node name="RigidBodyPc" type="RigidBody3D" unique_id=88483442]
+can_sleep = false
+lock_rotation = true
+contact_monitor = true
+max_contacts_reported = 3
+script = ExtResource("1_nnojr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1892222378]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8265579, 0)
+shape = SubResource("CapsuleShape3D_2j7bj")
+
+[node name="CameraPivot" type="Node3D" parent="." unique_id=1665938510]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.8408974, -0.5411946, 0, 0.5411946, 0.8408974, 0, 0, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot" unique_id=706493962]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+shape = SubResource("SphereShape3D_2j7bj")
+spring_length = 10.0
+
+[node name="Camera" type="Camera3D" parent="CameraPivot/SpringArm3D" unique_id=417886514]
+unique_name_in_owner = true

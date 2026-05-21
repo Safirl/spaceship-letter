@@ -3,14 +3,14 @@ extends Node
 class TPSInput extends RefCounted:
 	var action_name: String
 	var events: Array[InputEvent] = []
-	
+
 	func _init(in_action_name: String, in_events: Array[InputEvent]) -> void:
 		if in_action_name.is_empty() or in_events.is_empty():
 			push_error("Invalid TPSInput constructor")
 			return;
 		action_name = in_action_name
 		events = in_events
-		
+
 var inputs: Array[TPSInput]
 
 func _ready() -> void:
@@ -33,7 +33,7 @@ func _create_input_events() -> void:
 	var move_left = TPSInput.new("move_left", move_left_events)
 	inputs.push_back(move_left)
 
-	
+
 	var move_right_WASD = InputEventKey.new()
 	move_right_WASD.physical_keycode = KEY_D
 	var move_right_arrow = InputEventKey.new()
@@ -57,7 +57,7 @@ func _create_input_events() -> void:
 	inputs.push_back(move_forward)
 
 	var move_backward_WASD = InputEventKey.new()
-	move_backward_WASD.physical_keycode = KEY_S
+	move_backward_WASD.physical_keycode  = KEY_S
 	var move_backward_arrow = InputEventKey.new()
 	move_backward_arrow.physical_keycode = KEY_DOWN
 	var move_backward_joystick = InputEventJoypadMotion.new()
@@ -66,7 +66,7 @@ func _create_input_events() -> void:
 	var move_backward_events: Array[InputEvent] = [move_backward_WASD, move_backward_arrow, move_backward_joystick]
 	var move_backward = TPSInput.new("move_backward", move_backward_events)
 	inputs.push_back(move_backward)
-	
+
 	var jump_keyboard = InputEventKey.new()
 	jump_keyboard.physical_keycode = KEY_SPACE
 	var jump_joystick = InputEventJoypadButton.new()
