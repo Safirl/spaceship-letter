@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cf71xlacpsrbw"]
 
-[ext_resource type="Script" uid="uid://c7414julxk5xj" path="res://addons/ThirdPersonController/RigidBodyPlayerController/rigid_body_pc.gd" id="1_nnojr"]
+[ext_resource type="Script" uid="uid://c7414julxk5xj" path="res://Player/rigid_body_pc.gd" id="1_nnojr"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2j7bj"]
 radius = 0.2685547

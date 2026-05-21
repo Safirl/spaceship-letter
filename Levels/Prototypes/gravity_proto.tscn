@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://sj1f7llishaf"]
 
-[ext_resource type="Shader" uid="uid://cdlt3ujrpad32" path="res://addons/ThirdPersonController/Example/level/sky_with_stars.tres" id="1_15vv2"]
-[ext_resource type="Texture2D" uid="uid://ca3jtautvrj1u" path="res://addons/ThirdPersonController/Example/level/moon.png" id="2_dko20"]
-[ext_resource type="PackedScene" uid="uid://prh35jb6tjtd" path="res://addons/ThirdPersonController/Example/player/sophia_skin/sophia_skin.tscn" id="2_jlcq4"]
-[ext_resource type="PackedScene" uid="uid://cf71xlacpsrbw" path="res://addons/ThirdPersonController/RigidBodyPlayerController/rigid_body_pc.tscn" id="4_15vv2"]
-[ext_resource type="PackedScene" uid="uid://c6hoosccl5md8" path="res://Planet/planet.tscn" id="5_dko20"]
+[ext_resource type="Shader" uid="uid://cdlt3ujrpad32" path="res://addons/ThirdPersonController/Example/level/sky_with_stars.tres" id="1_6b3fn"]
+[ext_resource type="Texture2D" uid="uid://ca3jtautvrj1u" path="res://addons/ThirdPersonController/Example/level/moon.png" id="2_33ojt"]
+[ext_resource type="PackedScene" uid="uid://c6hoosccl5md8" path="res://Planets/template_planet.tscn" id="2_luuso"]
+[ext_resource type="PackedScene" uid="uid://cf71xlacpsrbw" path="res://Player/rigid_body_pc.tscn" id="3_33ojt"]
+[ext_resource type="PackedScene" uid="uid://prh35jb6tjtd" path="res://addons/ThirdPersonController/Example/player/sophia_skin/sophia_skin.tscn" id="4_6hx1v"]
 
 [sub_resource type="Curve" id="Curve_6w12d"]
 _data = [Vector2(0.331719, 0.0391753), 0.0, 0.0, 0, 0, Vector2(0.697336, 1), 0.51276, 0.0, 0, 0]
@@ -31,12 +31,12 @@ color_ramp = SubResource("Gradient_td4d6")
 seamless = true
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bruj0"]
-shader = ExtResource("1_15vv2")
+shader = ExtResource("1_6b3fn")
 shader_parameter/top_color = Color(0.288469, 0.182916, 1, 1)
 shader_parameter/bottom_color = Color(1, 0.46805, 0, 1)
 shader_parameter/gradient_curve = SubResource("CurveTexture_moxc7")
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_83fre")
-shader_parameter/moon_texture = ExtResource("2_dko20")
+shader_parameter/moon_texture = ExtResource("2_33ojt")
 shader_parameter/moon_direction = Vector3(-1.095, 0.68, 1)
 shader_parameter/moon_size = 0.045
 
@@ -72,14 +72,13 @@ volumetric_fog_density = 0.01
 volumetric_fog_albedo = Color(0.843137, 0.737255, 0.329412, 1)
 volumetric_fog_emission = Color(0.843137, 0.737255, 0.329412, 1)
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_m0t0v"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_iwo4u"]
-size = Vector3(2.0070877, 0.13500977, 1.9875793)
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_dko20"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_wavon"]
 resource_local_to_scene = true
-radius = 22.924623
+radius = 8.602884
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_lwehm"]
+resource_local_to_scene = true
+radius = 8.602884
 
 [node name="S_GravityTest" type="Node3D" unique_id=1078212070]
 
@@ -92,25 +91,23 @@ light_energy = 0.53
 shadow_enabled = true
 directional_shadow_max_distance = 40.0
 
-[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1731758818]
-visible = false
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=1162899310]
-mesh = SubResource("PlaneMesh_m0t0v")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1560639852]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000102996826, -0.05895996, -0.0036722422)
-shape = SubResource("BoxShape3D_iwo4u")
-
-[node name="Planet" parent="." unique_id=2053236219 instance=ExtResource("5_dko20")]
+[node name="Planet" parent="." unique_id=2053236219 instance=ExtResource("2_luuso")]
 
 [node name="MaxGravityShape" parent="Planet/MaxGravityArea" parent_id_path=PackedInt32Array(2053236219, 822839728) index="0" unique_id=38917084]
-shape = SubResource("SphereShape3D_dko20")
+shape = SubResource("SphereShape3D_wavon")
 
-[node name="RigidBodyPc" parent="." unique_id=88483442 node_paths=PackedStringArray("pawn") instance=ExtResource("4_15vv2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 22.055077, 0)
+[node name="RigidBodyPc" parent="." unique_id=88483442 node_paths=PackedStringArray("pawn") instance=ExtResource("3_33ojt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.2773533, 0)
 pawn = NodePath("SophiaSkin")
+jump_impulse = 8.0
 
-[node name="SophiaSkin" parent="RigidBodyPc" unique_id=1815263186 instance=ExtResource("2_jlcq4")]
+[node name="SophiaSkin" parent="RigidBodyPc" unique_id=1815263186 instance=ExtResource("4_6hx1v")]
+
+[node name="Planet2" parent="." unique_id=1221621697 instance=ExtResource("2_luuso")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 15.549868)
+
+[node name="MaxGravityShape" parent="Planet2/MaxGravityArea" parent_id_path=PackedInt32Array(1221621697, 822839728) index="0" unique_id=38917084]
+shape = SubResource("SphereShape3D_lwehm")
 
 [editable path="Planet"]
+[editable path="Planet2"]
