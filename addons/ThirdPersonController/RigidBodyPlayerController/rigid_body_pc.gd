@@ -88,8 +88,8 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 
 func _get_model_oriented_input() -> Vector3:
 	var raw_input := Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
-	var forward := -basis.z
-	var right := -basis.x
+	var forward := _camera.global_basis.z
+	var right := _camera.global_basis.x
 
 	var move_direction := (forward * raw_input.y + right * raw_input.x).normalized()
 	return move_direction

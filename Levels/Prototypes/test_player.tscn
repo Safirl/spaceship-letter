@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cf71xlacpsrbw" path="res://addons/ThirdPersonController/RigidBodyPlayerController/rigid_body_pc.tscn" id="5_40btc"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yr7h1"]
-size = Vector3(10.086029, 9.300903, 8.202667)
+size = Vector3(10.086029, 14, 8.202667)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_54bwq"]
 size = Vector3(14.709106, 11.87207, 9.347168)
@@ -22,12 +22,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5493207, -4.7683716e-07, -
 gravity_space_override = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=184399596]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5426178, 2.3134155, -1.2845612)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5426178, -0.036132813, -1.2845612)
 shape = SubResource("BoxShape3D_yr7h1")
 
 [node name="RigidBodyPc" parent="." unique_id=88483442 node_paths=PackedStringArray("pawn") instance=ExtResource("5_40btc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9562831, -40.738277)
 pawn = NodePath("SophiaSkin")
+jump_impulse = 8.0
 
 [node name="SophiaSkin" parent="RigidBodyPc" unique_id=1815263186 instance=ExtResource("3_yr7h1")]
 
