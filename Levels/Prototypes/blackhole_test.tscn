@@ -1,0 +1,129 @@
+[gd_scene format=3 uid="uid://b7iq8w8f4tumv"]
+
+[ext_resource type="PackedScene" uid="uid://c6hoosccl5md8" path="res://Planets/template_planet.tscn" id="1_0yp3e"]
+[ext_resource type="PackedScene" uid="uid://cf71xlacpsrbw" path="res://Player/rigid_body_pc.tscn" id="2_veb5d"]
+[ext_resource type="PackedScene" uid="uid://prh35jb6tjtd" path="res://addons/ThirdPersonController/Example/player/sophia_skin/sophia_skin.tscn" id="3_orohk"]
+[ext_resource type="Shader" uid="uid://bab6dakhwdhki" path="res://Planets/Blackhole/env_blackhole_test.tres" id="4_fc5j5"]
+[ext_resource type="Texture2D" uid="uid://ca3jtautvrj1u" path="res://addons/ThirdPersonController/Example/level/moon.png" id="5_17rgo"]
+[ext_resource type="PackedScene" uid="uid://cfa31woqbgti5" path="res://Planets/Blackhole/blackhole.tscn" id="6_8chyp"]
+[ext_resource type="Shader" uid="uid://ll8e04gi7ksf" path="res://Planets/Blackhole/blackhole.gdshader" id="7_veb5d"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_veb5d"]
+resource_local_to_scene = true
+radius = 8.602884
+
+[sub_resource type="Curve" id="Curve_8584m"]
+_data = [Vector2(0.331719, 0.0391753), 0.0, 0.0, 0, 0, Vector2(0.697336, 1), 0.51276, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_moxc7"]
+curve = SubResource("Curve_8584m")
+
+[sub_resource type="Gradient" id="Gradient_04eof"]
+offsets = PackedFloat32Array(0.784123, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_feebc"]
+frequency = 0.3589
+fractal_octaves = 4
+cellular_distance_function = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_83fre"]
+width = 1024
+height = 1024
+generate_mipmaps = false
+noise = SubResource("FastNoiseLite_feebc")
+color_ramp = SubResource("Gradient_04eof")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6cx7d"]
+shader = ExtResource("4_fc5j5")
+shader_parameter/top_color = Color(0.16203272, 0.3777489, 0.7398322, 1)
+shader_parameter/bottom_color = Color(0.22091717, 0.1537467, 0.24823529, 1)
+shader_parameter/gradient_curve = SubResource("CurveTexture_moxc7")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_83fre")
+shader_parameter/moon_texture = ExtResource("5_17rgo")
+shader_parameter/moon_direction = Vector3(-1.095, 1.275, 1)
+shader_parameter/moon_size = 0.045
+
+[sub_resource type="Sky" id="Sky_0h0bb"]
+sky_material = SubResource("ShaderMaterial_6cx7d")
+
+[sub_resource type="Environment" id="Environment_8nmdg"]
+background_mode = 2
+sky = SubResource("Sky_0h0bb")
+ambient_light_source = 3
+ambient_light_color = Color(0.74902, 0.742654, 0.615273, 1)
+ambient_light_sky_contribution = 0.0
+tonemap_mode = 2
+tonemap_exposure = 1.05
+tonemap_white = 0.95
+ssao_enabled = true
+ssao_radius = 2.0
+ssao_intensity = 1.4
+glow_intensity = 4.98
+glow_strength = 0.26
+glow_bloom = 0.08
+glow_blend_mode = 0
+glow_hdr_threshold = 0.26
+glow_hdr_scale = 0.0
+glow_hdr_luminance_cap = 18.75
+glow_map_strength = 1.0
+fog_light_color = Color(0.843137, 0.737255, 0.329412, 1)
+fog_density = 0.0
+fog_aerial_perspective = 1.0
+fog_sky_affect = 0.0
+fog_height_density = 0.1
+volumetric_fog_density = 0.01
+volumetric_fog_albedo = Color(0.843137, 0.737255, 0.329412, 1)
+volumetric_fog_emission = Color(0.843137, 0.737255, 0.329412, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_orohk"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("7_veb5d")
+shader_parameter/circle_radius = 0.18
+shader_parameter/distortion_strength = 0.01
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_fc5j5"]
+resource_local_to_scene = true
+material = SubResource("ShaderMaterial_orohk")
+size = Vector2(8, 8)
+
+[node name="BlackholeTest" type="Node3D" unique_id=1508333977]
+
+[node name="Planet" parent="." unique_id=2053236219 instance=ExtResource("1_0yp3e")]
+
+[node name="MaxGravityShape" parent="Planet/MaxGravityArea" parent_id_path=PackedInt32Array(2053236219, 822839728) index="0" unique_id=38917084]
+shape = SubResource("SphereShape3D_veb5d")
+
+[node name="RigidBodyPc" parent="." unique_id=88483442 node_paths=PackedStringArray("pawn") instance=ExtResource("2_veb5d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.2773533, 0)
+pawn = NodePath("SophiaSkin")
+jump_impulse = 8.0
+
+[node name="PlayerCamera" parent="RigidBodyPc/CameraPivot/SpringArm3D" parent_id_path=PackedInt32Array(88483442, 706493962) index="0" unique_id=417886514]
+cull_mask = 1048575
+
+[node name="SophiaSkin" parent="RigidBodyPc" unique_id=1815263186 instance=ExtResource("3_orohk")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=37772994]
+environment = SubResource("Environment_8nmdg")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=831345926]
+transform = Transform3D(1, 0, 0, 0, -0.47715873, 0.87881714, 0, -0.87881714, -0.47715873, 0, 0, 0)
+light_energy = 1.322
+shadow_enabled = true
+directional_shadow_max_distance = 40.0
+
+[node name="Blackhole" parent="." unique_id=1196436594 node_paths=PackedStringArray("player_camera") instance=ExtResource("6_8chyp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.376411, 18.72833)
+player_camera = NodePath("../RigidBodyPc/CameraPivot/SpringArm3D/PlayerCamera")
+
+[node name="Mesh" parent="Blackhole" index="0" unique_id=870346155]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0.5525336, 0.49997997, 0.105594635)
+mesh = SubResource("PlaneMesh_fc5j5")
+
+[editable path="Planet"]
+[editable path="RigidBodyPc"]
+[editable path="Blackhole"]

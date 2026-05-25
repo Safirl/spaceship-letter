@@ -40,7 +40,7 @@ func _create_input_events() -> void:
 	move_right_arrow.physical_keycode = KEY_RIGHT
 	var move_right_joystick = InputEventJoypadMotion.new()
 	move_right_joystick.axis_value = 1.
-	move_right_joystick.axis = JOY_AXIS_RIGHT_X
+	move_right_joystick.axis = JOY_AXIS_LEFT_X
 	var move_right_events: Array[InputEvent] = [move_right_WASD, move_right_arrow, move_right_joystick]
 	var move_right = TPSInput.new("move_right", move_right_events)
 	inputs.push_back(move_right)
@@ -50,7 +50,7 @@ func _create_input_events() -> void:
 	var move_forward_arrow = InputEventKey.new()
 	move_forward_arrow.physical_keycode = KEY_UP
 	var move_forward_joystick = InputEventJoypadMotion.new()
-	move_forward_joystick.axis_value = 1.
+	move_forward_joystick.axis_value = -1.
 	move_forward_joystick.axis = JOY_AXIS_LEFT_Y
 	var move_forward_events: Array[InputEvent] = [move_forward_WASD, move_forward_arrow, move_forward_joystick]
 	var move_forward = TPSInput.new("move_forward", move_forward_events)
@@ -61,7 +61,7 @@ func _create_input_events() -> void:
 	var move_backward_arrow = InputEventKey.new()
 	move_backward_arrow.physical_keycode = KEY_DOWN
 	var move_backward_joystick = InputEventJoypadMotion.new()
-	move_backward_joystick.axis_value = -1.
+	move_backward_joystick.axis_value = 1.
 	move_backward_joystick.axis = JOY_AXIS_LEFT_Y
 	var move_backward_events: Array[InputEvent] = [move_backward_WASD, move_backward_arrow, move_backward_joystick]
 	var move_backward = TPSInput.new("move_backward", move_backward_events)

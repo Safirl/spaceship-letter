@@ -18,7 +18,7 @@ class_name RigidBodyPlayerController extends RigidBody3D
 @export_range(0., 100., .1) var damping := 60.0
 
 @onready var _camera_pivot: Node3D = %CameraPivot
-@onready var _camera: Camera3D = %Camera
+@onready var _camera: Camera3D = %PlayerCamera
 
 var _camera_input_direction := Vector2.ZERO
 var _move_direction := Vector3.ZERO

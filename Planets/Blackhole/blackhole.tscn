@@ -1,35 +1,50 @@
 [gd_scene format=3 uid="uid://cfa31woqbgti5"]
 
-[ext_resource type="Shader" uid="uid://ll8e04gi7ksf" path="res://Planets/Blackhole/blackhole.gdshader" id="1_tr88m"]
+[ext_resource type="Script" uid="uid://b5rv5ikbdfomt" path="res://Planets/Blackhole/blackhole.gd" id="1_4a2w7"]
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_tr88m"]
+[sub_resource type="Shader" id="Shader_ixu6l"]
+code = "shader_type spatial;
+render_mode unshaded;
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_tr88m"]
-noise = SubResource("FastNoiseLite_tr88m")
+uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_nearest;
+uniform float circle_radius;
+varying vec2 vUv;
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_ixu6l"]
+void vertex() {
+	vUv = UV;
+}
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_y6d81"]
-noise = SubResource("FastNoiseLite_ixu6l")
-as_normal_map = true
+void fragment() {
+	float strength = step(circle_radius, distance(vUv, vec2(0.5)) + 0.25);
+	if (strength > .9) {
+		discard;
+	}
+	ALBEDO = textureLod(screen_texture, SCREEN_UV, 0.0).rgb;
+}
+
+//void light() {
+//	// Called for every pixel for every light affecting the material.
+//	// Uncomment to replace the default light processing function with this one.
+//}
+"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ixu6l"]
+resource_local_to_scene = true
 render_priority = 0
-shader = ExtResource("1_tr88m")
-shader_parameter/noise = SubResource("NoiseTexture2D_tr88m")
-shader_parameter/heightScale = 0.1
-shader_parameter/normalmap = SubResource("NoiseTexture2D_y6d81")
+shader = SubResource("Shader_ixu6l")
+shader_parameter/circle_radius = 0.5
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_tiac3"]
+resource_local_to_scene = true
 material = SubResource("ShaderMaterial_ixu6l")
 subdivide_width = 32
 subdivide_depth = 32
 
 [node name="Blackhole" type="Node3D" unique_id=1196436594]
+script = ExtResource("1_4a2w7")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=870346155]
+[node name="Mesh" type="MeshInstance3D" parent="." unique_id=870346155]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+layers = 524288
 mesh = SubResource("PlaneMesh_tiac3")
-
-[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=813398397]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.32015902, 1.156605, -0.28117147)
-omni_range = 2.471681
