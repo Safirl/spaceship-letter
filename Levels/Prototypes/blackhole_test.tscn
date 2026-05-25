@@ -78,16 +78,16 @@ volumetric_fog_density = 0.01
 volumetric_fog_albedo = Color(0.843137, 0.737255, 0.329412, 1)
 volumetric_fog_emission = Color(0.843137, 0.737255, 0.329412, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fc5j5"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_orohk"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("7_veb5d")
-shader_parameter/circle_radius = 0.045
-shader_parameter/distortion_strength = 0.005
+shader_parameter/circle_radius = 0.18
+shader_parameter/distortion_strength = 0.02
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_17rgo"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_fc5j5"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_fc5j5")
+material = SubResource("ShaderMaterial_orohk")
 subdivide_width = 32
 subdivide_depth = 32
 
@@ -109,12 +109,6 @@ jump_impulse = 5.9
 [node name="PlayerCamera" parent="RigidBodyPc/CameraPivot/SpringArm3D" parent_id_path=PackedInt32Array(88483442, 706493962) index="0" unique_id=417886514]
 cull_mask = 1048575
 
-[node name="BlackholeViewport" parent="RigidBodyPc" index="2" unique_id=1663539229]
-gui_disable_input = true
-
-[node name="BlackholeCamera" parent="RigidBodyPc/BlackholeViewport" index="0" unique_id=2071469357]
-transform = Transform3D(-0.9997079, 0, -0.024170341, 0, 1, 0, 0.024170341, 0, -0.9997079, 0, 7.275861, 0)
-
 [node name="SophiaSkin" parent="RigidBodyPc" unique_id=1815263186 instance=ExtResource("3_orohk")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=37772994]
@@ -130,8 +124,8 @@ directional_shadow_max_distance = 40.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9275944, 7.9137344, 17.273788)
 
 [node name="Mesh" parent="Blackhole2" index="0" unique_id=870346155]
-transform = Transform3D(32.34584, 0, 0, 0, -1.4138816e-06, 32.34584, 0, -32.34584, -1.4138816e-06, 0, 0, 0)
-mesh = SubResource("PlaneMesh_17rgo")
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, -8.338959)
+mesh = SubResource("PlaneMesh_fc5j5")
 
 [editable path="Planet"]
 [editable path="RigidBodyPc"]

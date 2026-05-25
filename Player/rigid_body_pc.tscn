@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://cf71xlacpsrbw"]
 
 [ext_resource type="Script" uid="uid://c7414julxk5xj" path="res://Player/rigid_body_pc.gd" id="1_nnojr"]
-[ext_resource type="Script" uid="uid://c5i3xta7j5a2p" path="res://Planets/Blackhole/blackhole_camera.gd" id="2_ua70f"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2j7bj"]
 radius = 0.2685547
@@ -32,10 +31,3 @@ spring_length = 10.0
 [node name="PlayerCamera" type="Camera3D" parent="CameraPivot/SpringArm3D" unique_id=417886514]
 unique_name_in_owner = true
 cull_mask = 524287
-
-[node name="BlackholeViewport" type="SubViewport" parent="." unique_id=1663539229]
-size = Vector2i(1920, 1080)
-
-[node name="BlackholeCamera" type="Camera3D" parent="BlackholeViewport" unique_id=2071469357]
-cull_mask = 524287
-script = ExtResource("2_ua70f")
