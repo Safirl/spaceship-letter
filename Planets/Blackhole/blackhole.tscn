@@ -1,38 +1,14 @@
 [gd_scene format=3 uid="uid://cfa31woqbgti5"]
 
 [ext_resource type="Script" uid="uid://b5rv5ikbdfomt" path="res://Planets/Blackhole/blackhole.gd" id="1_4a2w7"]
-
-[sub_resource type="Shader" id="Shader_ixu6l"]
-code = "shader_type spatial;
-render_mode unshaded;
-
-uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_nearest;
-uniform float circle_radius;
-varying vec2 vUv;
-
-void vertex() {
-	vUv = UV;
-}
-
-void fragment() {
-	float strength = step(circle_radius, distance(vUv, vec2(0.5)) + 0.25);
-	if (strength > .9) {
-		discard;
-	}
-	ALBEDO = textureLod(screen_texture, SCREEN_UV, 0.0).rgb;
-}
-
-//void light() {
-//	// Called for every pixel for every light affecting the material.
-//	// Uncomment to replace the default light processing function with this one.
-//}
-"
+[ext_resource type="Shader" uid="uid://ll8e04gi7ksf" path="res://Planets/Blackhole/blackhole.gdshader" id="1_tr88m"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ixu6l"]
 resource_local_to_scene = true
 render_priority = 0
-shader = SubResource("Shader_ixu6l")
-shader_parameter/circle_radius = 0.5
+shader = ExtResource("1_tr88m")
+shader_parameter/circle_radius = 0.23
+shader_parameter/distortion_strength = 0.01
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_tiac3"]
 resource_local_to_scene = true

@@ -2,6 +2,7 @@ shader_type spatial;
 render_mode unshaded, cull_disabled;
 
 uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_nearest;
+//uniform sampler2D screen_texture : repeat_disable, source_color;
 uniform float circle_radius = .5;
 uniform float distortion_strength = 0.02;
 
@@ -25,6 +26,8 @@ void fragment() {
 		ALBEDO = vec3(0);
 	}
 	else {
-		ALBEDO = textureLod(screen_texture, deformed_uv, 0.0).rgb;
+		vec3 color = textureLod(screen_texture, deformed_uv, 0.0).rgb;
+		//color = color = pow(color, vec3(2.2));eare
+		ALBEDO = color;
 	}
 }

@@ -78,32 +78,42 @@ volumetric_fog_density = 0.01
 volumetric_fog_albedo = Color(0.843137, 0.737255, 0.329412, 1)
 volumetric_fog_emission = Color(0.843137, 0.737255, 0.329412, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_orohk"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fc5j5"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("7_veb5d")
-shader_parameter/circle_radius = 0.18
-shader_parameter/distortion_strength = 0.01
+shader_parameter/circle_radius = 0.045
+shader_parameter/distortion_strength = 0.005
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_fc5j5"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_17rgo"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_orohk")
-size = Vector2(8, 8)
+material = SubResource("ShaderMaterial_fc5j5")
+subdivide_width = 32
+subdivide_depth = 32
 
 [node name="BlackholeTest" type="Node3D" unique_id=1508333977]
 
 [node name="Planet" parent="." unique_id=2053236219 instance=ExtResource("1_0yp3e")]
 
-[node name="MaxGravityShape" parent="Planet/MaxGravityArea" parent_id_path=PackedInt32Array(2053236219, 822839728) index="0" unique_id=38917084]
+[node name="MaxGravityArea" parent="Planet" index="1" unique_id=822839728]
+gravity_space_override = 4
+
+[node name="MaxGravityShape" parent="Planet/MaxGravityArea" index="0" unique_id=38917084]
 shape = SubResource("SphereShape3D_veb5d")
 
 [node name="RigidBodyPc" parent="." unique_id=88483442 node_paths=PackedStringArray("pawn") instance=ExtResource("2_veb5d")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.2773533, 0)
 pawn = NodePath("SophiaSkin")
-jump_impulse = 8.0
+jump_impulse = 5.9
 
 [node name="PlayerCamera" parent="RigidBodyPc/CameraPivot/SpringArm3D" parent_id_path=PackedInt32Array(88483442, 706493962) index="0" unique_id=417886514]
 cull_mask = 1048575
+
+[node name="BlackholeViewport" parent="RigidBodyPc" index="2" unique_id=1663539229]
+gui_disable_input = true
+
+[node name="BlackholeCamera" parent="RigidBodyPc/BlackholeViewport" index="0" unique_id=2071469357]
+transform = Transform3D(-0.9997079, 0, -0.024170341, 0, 1, 0, 0.024170341, 0, -0.9997079, 0, 7.275861, 0)
 
 [node name="SophiaSkin" parent="RigidBodyPc" unique_id=1815263186 instance=ExtResource("3_orohk")]
 
@@ -116,14 +126,13 @@ light_energy = 1.322
 shadow_enabled = true
 directional_shadow_max_distance = 40.0
 
-[node name="Blackhole" parent="." unique_id=1196436594 node_paths=PackedStringArray("player_camera") instance=ExtResource("6_8chyp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.376411, 18.72833)
-player_camera = NodePath("../RigidBodyPc/CameraPivot/SpringArm3D/PlayerCamera")
+[node name="Blackhole2" parent="." unique_id=231498065 instance=ExtResource("6_8chyp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9275944, 7.9137344, 17.273788)
 
-[node name="Mesh" parent="Blackhole" index="0" unique_id=870346155]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0.5525336, 0.49997997, 0.105594635)
-mesh = SubResource("PlaneMesh_fc5j5")
+[node name="Mesh" parent="Blackhole2" index="0" unique_id=870346155]
+transform = Transform3D(32.34584, 0, 0, 0, -1.4138816e-06, 32.34584, 0, -32.34584, -1.4138816e-06, 0, 0, 0)
+mesh = SubResource("PlaneMesh_17rgo")
 
 [editable path="Planet"]
 [editable path="RigidBodyPc"]
-[editable path="Blackhole"]
+[editable path="Blackhole2"]

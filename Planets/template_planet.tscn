@@ -16,6 +16,7 @@ transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
 
 [node name="PlanetMesh" type="MeshInstance3D" parent="PlanetStaticBody" unique_id=1122862199]
 unique_name_in_owner = true
+layers = 524288
 mesh = SubResource("SphereMesh_15vv2")
 
 [node name="SurfaceCollisionShape" type="CollisionShape3D" parent="PlanetStaticBody" unique_id=1385087150]
