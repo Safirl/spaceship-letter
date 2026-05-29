@@ -1,26 +1,26 @@
 [gd_scene format=3 uid="uid://cfa31woqbgti5"]
 
-[ext_resource type="Script" uid="uid://b5rv5ikbdfomt" path="res://Planets/Blackhole/blackhole.gd" id="1_4a2w7"]
 [ext_resource type="Shader" uid="uid://ll8e04gi7ksf" path="res://Planets/Blackhole/blackhole.gdshader" id="1_tr88m"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ixu6l"]
-resource_local_to_scene = true
-render_priority = 0
-shader = ExtResource("1_tr88m")
-shader_parameter/circle_radius = 0.23
-shader_parameter/distortion_strength = 0.01
+[ext_resource type="Script" uid="uid://bgx15j5877duu" path="res://Planets/Blackhole/blackhole_mesh.gd" id="3_y6d81"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_tiac3"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_ixu6l")
+flip_faces = true
 subdivide_width = 32
 subdivide_depth = 32
+orientation = 2
 
-[node name="Blackhole" type="Node3D" unique_id=1196436594]
-script = ExtResource("1_4a2w7")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y6d81"]
+render_priority = 0
+shader = ExtResource("1_tr88m")
+shader_parameter/noise_speed = 1.0
+shader_parameter/circle_radius = 0.2
+shader_parameter/u_effect_radius = 2.0
+shader_parameter/distortion_strength = 0.135
 
-[node name="Mesh" type="MeshInstance3D" parent="." unique_id=870346155]
+[node name="Mesh" type="MeshInstance3D" unique_id=1843775655]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
 layers = 524288
 mesh = SubResource("PlaneMesh_tiac3")
+surface_material_override/0 = SubResource("ShaderMaterial_y6d81")
+script = ExtResource("3_y6d81")

@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cfa31woqbgti5" path="res://Planets/Blackhole/blackhole.tscn" id="6_8chyp"]
 [ext_resource type="Shader" uid="uid://ll8e04gi7ksf" path="res://Planets/Blackhole/blackhole.gdshader" id="7_veb5d"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_veb5d"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_0yp3e"]
 resource_local_to_scene = true
 radius = 8.602884
 
@@ -78,18 +78,29 @@ volumetric_fog_density = 0.01
 volumetric_fog_albedo = Color(0.843137, 0.737255, 0.329412, 1)
 volumetric_fog_emission = Color(0.843137, 0.737255, 0.329412, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_orohk"]
-resource_local_to_scene = true
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_veb5d"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_orohk"]
+noise = SubResource("FastNoiseLite_veb5d")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_veb5d"]
 render_priority = 0
 shader = ExtResource("7_veb5d")
-shader_parameter/circle_radius = 0.18
-shader_parameter/distortion_strength = 0.02
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_orohk")
+shader_parameter/noise_scale = 0.14500000618898
+shader_parameter/noise_speed = 0.015
+shader_parameter/object_screen_uv = Vector2(0.78026533, 0.37426153)
+shader_parameter/circle_radius = 0.10700000438398
+shader_parameter/u_effect_radius = 0.5
+shader_parameter/distortion_strength = 0.03900000045547
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_fc5j5"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_veb5d"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_orohk")
+material = SubResource("ShaderMaterial_veb5d")
+flip_faces = true
 subdivide_width = 32
 subdivide_depth = 32
+orientation = 2
 
 [node name="BlackholeTest" type="Node3D" unique_id=1508333977]
 
@@ -99,7 +110,7 @@ subdivide_depth = 32
 gravity_space_override = 4
 
 [node name="MaxGravityShape" parent="Planet/MaxGravityArea" index="0" unique_id=38917084]
-shape = SubResource("SphereShape3D_veb5d")
+shape = SubResource("SphereShape3D_0yp3e")
 
 [node name="RigidBodyPc" parent="." unique_id=88483442 node_paths=PackedStringArray("pawn") instance=ExtResource("2_veb5d")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.2773533, 0)
@@ -121,11 +132,9 @@ shadow_enabled = true
 directional_shadow_max_distance = 40.0
 
 [node name="Blackhole2" parent="." unique_id=231498065 instance=ExtResource("6_8chyp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9275944, 7.9137344, 17.273788)
-
-[node name="Mesh" parent="Blackhole2" index="0" unique_id=870346155]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, -8.338959)
-mesh = SubResource("PlaneMesh_fc5j5")
+transform = Transform3D(3.4277728, -0.5138548, 2.3711376, 0, 4.1042485, 0.8894415, -2.4261785, -0.7259884, 3.3500097, 2.03714, 9.825512, 11.68994)
+mesh = SubResource("PlaneMesh_veb5d")
+surface_material_override/0 = null
 
 [editable path="Planet"]
 [editable path="RigidBodyPc"]

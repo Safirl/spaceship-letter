@@ -1,9 +1,9 @@
-extends Node3D
+extends MeshInstance3D
 
-@onready var meshInstance: MeshInstance3D = %Mesh
+#@onready var meshInstance: MeshInstance3D = %Mesh
 @export var player_camera: Camera3D
-@export var blackhole_subviewport: SubViewport
-var blackhole_material: ShaderMaterial
+#@export var blackhole_subviewport: SubViewport
+#var blackhole_material: ShaderMaterial
 
 func _ready() -> void:
 	if (!player_camera):
