@@ -1,6 +1,16 @@
 [gd_scene format=3 uid="uid://bsxc4i3xhh5yu"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_vqjnp"]
+[ext_resource type="Shader" uid="uid://cxrhrplxso3tc" path="res://Planets/JellyFish/tentacle/tentacle.tres" id="1_ara4o"]
 
-[node name="MeshInstance3D" type="MeshInstance3D" unique_id=838507450]
-mesh = SubResource("CapsuleMesh_vqjnp")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ara4o"]
+render_priority = 0
+shader = ExtResource("1_ara4o")
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_f3er8"]
+material = SubResource("ShaderMaterial_ara4o")
+radius = 0.01
+radial_segments = 128
+rings = 64
+
+[node name="MeshInstance3D" type="MeshInstance3D" unique_id=1828941676]
+mesh = SubResource("CapsuleMesh_f3er8")
