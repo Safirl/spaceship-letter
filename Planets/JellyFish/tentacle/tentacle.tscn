@@ -5,12 +5,22 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ara4o"]
 render_priority = 0
 shader = ExtResource("1_ara4o")
+shader_parameter/nodeWorldPosition = Vector3(0, 0, 0)
+shader_parameter/ondulationSpeed = 0.25200001197
+shader_parameter/distorsion = -0.5
+shader_parameter/tint = Color(0.69147605, 0.4662264, 0.7903964, 1)
+shader_parameter/tintStrength = 0.1
+shader_parameter/opacity = 0.9
+shader_parameter/Roughness = 0.8
+shader_parameter/emissionColor = Color(0.604593, 0.446892, 0.641215, 1)
+shader_parameter/edgeTintThreshold = 5.0930002419175
+shader_parameter/edgeTintEmissionStrength = 1.0
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_f3er8"]
 material = SubResource("ShaderMaterial_ara4o")
 radius = 0.01
 radial_segments = 128
-rings = 64
+rings = 128
 
 [node name="MeshInstance3D" type="MeshInstance3D" unique_id=1828941676]
 mesh = SubResource("CapsuleMesh_f3er8")

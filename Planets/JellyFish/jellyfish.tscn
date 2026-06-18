@@ -9,15 +9,15 @@
 render_priority = 0
 shader = ExtResource("1_0cedv")
 shader_parameter/ondulationSpeed = 0.25200001197
-shader_parameter/distorsion = -0.04899999906762
+shader_parameter/distorsion = 0.25200003571999996
 shader_parameter/tint = Color(0.62477624, 0.5006749, 0.8045996, 1)
-shader_parameter/tintStrength = 0.0670000031825
+shader_parameter/tintStrength = 0.7670000364325
 shader_parameter/opacity = 1.0
 shader_parameter/Roughness = 1.0
 shader_parameter/emissionColor = Color(0.604593, 0.446892, 0.641215, 1)
 shader_parameter/edgeTintThreshold = 10.0
 shader_parameter/edgeTintEmissionStrength = 1.0
-shader_parameter/clearcoat = 0.030000001425
+shader_parameter/clearcoat = 0.07200000342
 
 [sub_resource type="SphereMesh" id="SphereMesh_ekbxh"]
 material = SubResource("ShaderMaterial_0cedv")
@@ -29,25 +29,33 @@ render_priority = 0
 shader = ExtResource("4_qq557")
 shader_parameter/nodeWorldPosition = Vector3(0, 0, 0)
 shader_parameter/ondulationSpeed = 0.25200001197
+shader_parameter/distorsion = -0.5
+shader_parameter/tint = Color(0.69147605, 0.4662264, 0.7903964, 1)
+shader_parameter/tintStrength = 0.1
+shader_parameter/opacity = 0.9
+shader_parameter/Roughness = 0.8
+shader_parameter/emissionColor = Color(0.604593, 0.446892, 0.641215, 1)
+shader_parameter/edgeTintThreshold = 5.0930002419175
+shader_parameter/edgeTintEmissionStrength = 1.0
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_f3er8"]
 material = SubResource("ShaderMaterial_ara4o")
 radius = 0.01
 radial_segments = 128
-rings = 64
+rings = 128
 
 [sub_resource type="MultiMesh" id="MultiMesh_qq557"]
 transform_format = 1
 instance_count = 16
 mesh = SubResource("CapsuleMesh_f3er8")
-buffer = PackedFloat32Array(1, 0, 0, 0.4, 0, 1, 0, -1, 0, 0, 1, 0, 1, 0, 0, 0.3695518, 0, 1, 0, -1, 0, 0, 1, 0.15307337, 1, 0, 0, 0.28284273, 0, 1, 0, -1, 0, 0, 1, 0.28284273, 1, 0, 0, 0.15307337, 0, 1, 0, -1, 0, 0, 1, 0.3695518, 1, 0, 0, 2.4492935e-17, 0, 1, 0, -1, 0, 0, 1, 0.4, 1, 0, 0, -0.15307337, 0, 1, 0, -1, 0, 0, 1, 0.3695518, 1, 0, 0, -0.28284273, 0, 1, 0, -1, 0, 0, 1, 0.28284273, 1, 0, 0, -0.3695518, 0, 1, 0, -1, 0, 0, 1, 0.15307337, 1, 0, 0, -0.4, 0, 1, 0, -1, 0, 0, 1, 4.898587e-17, 1, 0, 0, -0.3695518, 0, 1, 0, -1, 0, 0, 1, -0.15307337, 1, 0, 0, -0.28284273, 0, 1, 0, -1, 0, 0, 1, -0.28284273, 1, 0, 0, -0.15307337, 0, 1, 0, -1, 0, 0, 1, -0.3695518, 1, 0, 0, -7.347881e-17, 0, 1, 0, -1, 0, 0, 1, -0.4, 1, 0, 0, 0.15307337, 0, 1, 0, -1, 0, 0, 1, -0.3695518, 1, 0, 0, 0.28284273, 0, 1, 0, -1, 0, 0, 1, -0.28284273, 1, 0, 0, 0.3695518, 0, 1, 0, -1, 0, 0, 1, -0.15307337)
+buffer = PackedFloat32Array(1, 0, 0, 0.39, 0, 1, 0, -1, 0, 0, 1, 0, 1, 0, 0, 0.36031303, 0, 1, 0, -1, 0, 0, 1, 0.14924654, 1, 0, 0, 0.27577165, 0, 1, 0, -1, 0, 0, 1, 0.27577165, 1, 0, 0, 0.14924654, 0, 1, 0, -1, 0, 0, 1, 0.36031303, 1, 0, 0, 2.3880613e-17, 0, 1, 0, -1, 0, 0, 1, 0.39, 1, 0, 0, -0.14924654, 0, 1, 0, -1, 0, 0, 1, 0.36031303, 1, 0, 0, -0.27577165, 0, 1, 0, -1, 0, 0, 1, 0.27577165, 1, 0, 0, -0.36031303, 0, 1, 0, -1, 0, 0, 1, 0.14924654, 1, 0, 0, -0.39, 0, 1, 0, -1, 0, 0, 1, 4.7761227e-17, 1, 0, 0, -0.36031303, 0, 1, 0, -1, 0, 0, 1, -0.14924654, 1, 0, 0, -0.27577165, 0, 1, 0, -1, 0, 0, 1, -0.27577165, 1, 0, 0, -0.14924654, 0, 1, 0, -1, 0, 0, 1, -0.36031303, 1, 0, 0, -7.1641835e-17, 0, 1, 0, -1, 0, 0, 1, -0.39, 1, 0, 0, 0.14924654, 0, 1, 0, -1, 0, 0, 1, -0.36031303, 1, 0, 0, 0.27577165, 0, 1, 0, -1, 0, 0, 1, -0.27577165, 1, 0, 0, 0.36031303, 0, 1, 0, -1, 0, 0, 1, -0.14924654)
 
 [node name="MeshInstance3D" type="MeshInstance3D" unique_id=239687179]
 mesh = SubResource("SphereMesh_ekbxh")
 script = ExtResource("2_0cedv")
 tentacle_scene = ExtResource("3_ekbxh")
 points_count = 16
-max_radius_offset = -0.1
+max_radius_offset = -0.11
 
 [node name="TentatclesMM" type="MultiMeshInstance3D" parent="." unique_id=667675999]
 unique_name_in_owner = true
